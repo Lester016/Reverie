@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content%}
+<h1>This is login page</h1>
+<form class="ui form" method="POST">
+    {{ form.hidden_tag() }} <!-- This is required else form won't work -->
+
+    <p>Username</p>
+    {{ form.username }}
+    {% for error in form.username.errors %}
+    <span style="color: #f44336">{{ error }}</span>
+    {% endfor %}
+
+    <p>Password</p>
+    {{ form.password }}
+    {% for error in form.password.errors %}
+    <span style="color: #f44336">{{ error }}</span>
+    {% endfor %}
+
+    {{ form.submit }}
+</form>
+{% endblock %}
