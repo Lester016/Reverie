@@ -49,4 +49,4 @@ def login():
 @users.route("/logout")
 def logout():
     logout_user() # Delete the session or the current_user data
-    return redirect(url_for('main.home'))
+    return redirect(url_for('users.login'))

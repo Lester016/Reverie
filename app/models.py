@@ -15,6 +15,11 @@ class User(db.Model, UserMixin):
     UserName = db.Column(db.String(20), unique=True, nullable=False)
     Email = db.Column(db.String(120), unique=True, nullable=False)
     Password = db.Column(db.String(60), nullable=False)
+    ProfilePicture = db.Column(db.String(20), nullable=False,
+                               default='default.png')
+    CoverPicture = db.Column(db.String(20), nullable=False,
+                             default='default.jpg')
+
 
     # Function to print the value of User model
     def __repr__(self):

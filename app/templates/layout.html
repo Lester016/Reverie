@@ -2,59 +2,101 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% if title %}
-    <title>Reverie - {{ title }}</title>
-    {% else %}
-    <title>Reverie</title>
-    {% endif %}
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  {% if title %}
+  <title>Reverie - {{ title }}</title>
+  {% else %}
+  <title>Reverie</title>
+  {% endif %}
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <li>
-                {% if title %}
-                <b>Reverie - {{ title }}</b>
-                {% else %}
-                <b>Reverie</b>
-                {% endif %}
-            </li>
-            <li>
-                Home
-            </li>
-            <li>
-                About
-            </li>
-            <li>
-                Others
-            </li>
-            {% if current_user.is_authenticated %}
-            <li>
-                <a href="{{ url_for('users.logout') }}">logout</a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
-
-    <!-- This is the flashed messages printed -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="ui {{category}} message">
-        <i class="close icon"></i>
-        <div class="header">
-            {{ message }}
+  {% if current_user.is_authenticated %}
+  <div>
+    <ul id="slide-out" class="sidenav">
+      <li>
+        <div class="user-view">
+          <div class="background">
+            <img src="{{ url_for('static', filename='cover_pictures/' +
+            current_user.CoverPicture) }}" alt="cover picture">
+          </div>
+          <a href="#user"><img src="{{ url_for('static', filename='profile_pictures/' +
+            current_user.ProfilePicture) }}" alt="Profile" class="circle"></a>
+          <a href="#name"><span class="white-text name">{{ current_user.username }}</span></a>
+          <a href="#email"><span class="white-text email">{{ current_user.email }}</span></a>
         </div>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
+      </li>
+      <li><a class="waves-effect">Channel</a></li>
+      <li><a class="waves-effect"><i class="material-icons">bookmark</i>Bookmarks</a></li>
+      <li><a class="waves-effect"><i class="material-icons">mode_edit</i> Posts</a></li>
+      <li>
+        <div class="divider"></div>
+      </li>
+      <li><a class="waves-effect" href="{{ url_for('users.logout') }}">Logout</a></li>
+    </ul>
+  </div>
+  {% endif %}
 
-    <!-- This is where the inherited html outputted -->
-    {% block content %}{% endblock %}
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="/" class="brand-logo">Reverie</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        {% if current_user.is_authenticated %}
+        <li style="cursor: pointer"><i class="material-icons">notifications_none</i></li>
+        <li class="sidenav-trigger" data-target="slide-out" style="cursor: pointer">
+          <img class="img-nav circle" src="{{ url_for('static', filename='profile_pictures/' +
+            current_user.ProfilePicture) }}" alt="Profile" class="circle">
+        </li>
+        {% else %}
+        <li><a href="{{ url_for('users.login') }}">Login</a></li>
+        <li><a href="{{ url_for('users.register') }}">Register</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+
+
+  <!-- This is the flashed messages printed -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  <div class="ui {{category}} message">
+    <i class="close icon"></i>
+    <div class="header">
+      {{ message }}
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <!-- This is where the inherited html outputted -->
+  {% block content %}{% endblock %}
+  <!-- Compiled and minified JavaScript -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+    $('.button-collapse').sideNav({
+      menuWidth: 300,
+      closeOnClick: true,
+      edge: 'right', // <--- CHECK THIS OUT
+    }
+    );
+    $('.collapsible').collapsible();
+  </script>
 </body>
 
 </html>
