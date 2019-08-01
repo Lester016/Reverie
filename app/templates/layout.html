@@ -30,11 +30,11 @@
           </div>
           <a href="#user"><img src="{{ url_for('static', filename='profile_pictures/' +
             current_user.ProfilePicture) }}" alt="Profile" class="circle"></a>
-          <a href="#name"><span class="white-text name">{{ current_user.username }}</span></a>
-          <a href="#email"><span class="white-text email">{{ current_user.email }}</span></a>
+          <a href="#name"><span class="white-text name">{{ current_user.UserName }}</span></a>
+          <a href="#email"><span class="white-text email">{{ current_user.Email }}</span></a>
         </div>
       </li>
-      <li><a class="waves-effect">Channel</a></li>
+      <li><a class="waves-effect" href="{{ url_for('main.profile') }}">Profile</a></li>
       <li><a class="waves-effect"><i class="material-icons">bookmark</i>Bookmarks</a></li>
       <li><a class="waves-effect"><i class="material-icons">mode_edit</i> Posts</a></li>
       <li>

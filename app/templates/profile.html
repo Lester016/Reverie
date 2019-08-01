@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content%}
+<div class="container">
+    <h1>{{ current_user.UserName }}</h1>
+    <p>{{ current_user.Email }}</p>
+    <img class="img-nav-md circle" src="{{ url_for('static', filename='profile_pictures/' +
+            current_user.ProfilePicture) }}" alt="Profile" class="circle">
+    <h1>Your Stories</h1>
+    <button>Write a story</button>
+
+    <hr>
+    <br>
+    {% for post in posts %}
+    <h4>{{ post.Title }}</h4>
+    <p>Published on july 15 · {{ post.TimeRead }}</p>
+    <hr>
+    {% endfor %}
+</div>
+{% endblock %}

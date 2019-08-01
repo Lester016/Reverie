@@ -57,3 +57,8 @@ posts = [
 @main.route("/")
 def home():
     return render_template('index.html', posts=posts)
+
+
+@main.route("/profile")
+def profile():
+    return render_template('profile.html', posts=posts)
