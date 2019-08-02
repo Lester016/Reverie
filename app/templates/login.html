@@ -1,21 +1,59 @@
 {% extends "layout.html" %}
 {% block content%}
-<h1>This is login page</h1>
-<form class="ui form" method="POST">
-    {{ form.hidden_tag() }} <!-- This is required else form won't work -->
+<main class="row justify-content-md-center">
+    <!-- Default form login -->
+    <form class="col-lg-5 col-md-6 text-center border border-light p-5" method="POST">
+        {{ form.hidden_tag() }}
+        <p class="h4 mb-4">Sign in</p>
 
-    <p>Username</p>
-    {{ form.username }}
-    {% for error in form.username.errors %}
-    <span style="color: #f44336">{{ error }}</span>
-    {% endfor %}
+        <!-- Email -->
+        {{ form.email(class='form-control mb-4', placeholder="E-mail") }}
+        {% for error in form.email.errors %}
+        <span style="color: #f44336">{{ error }}</span>
+        {% endfor %}
+        <!-- Password -->
+        {{ form.password(class='form-control mb-4', placeholder="Password") }}
+        {% for error in form.password.errors %}
+        <span style="color: #f44336">{{ error }}</span>
+        {% endfor %}
+        <div class="d-flex justify-content-around">
+            <div>
+                <!-- Remember me -->
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+                    <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
+                </div>
+            </div>
+            <div>
+                <!-- Forgot password -->
+                <a href="">Forgot password?</a>
+            </div>
+        </div>
 
-    <p>Password</p>
-    {{ form.password }}
-    {% for error in form.password.errors %}
-    <span style="color: #f44336">{{ error }}</span>
-    {% endfor %}
+        <!-- Sign in button -->
+        {{ form.submit(class="btn btn-info btn-block my-4") }}
+        <!-- Register -->
+        <p>Not a member?
+            <a href="">Register</a>
+        </p>
 
-    {{ form.submit }}
-</form>
+        <!-- Social login -->
+        <p>or sign in with:</p>
+
+        <a type="button" class="light-blue-text mx-2">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a type="button" class="light-blue-text mx-2">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a type="button" class="light-blue-text mx-2">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a type="button" class="light-blue-text mx-2">
+            <i class="fab fa-github"></i>
+        </a>
+
+    </form>
+    <!-- Default form login -->
+</main>
 {% endblock %}

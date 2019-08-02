@@ -2,10 +2,14 @@
 <html lang="en">
 
 <head>
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.7/css/mdb.min.css" rel="stylesheet">
+  <!-- Local Files -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='mdb.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 
   <meta charset="UTF-8">
@@ -18,85 +22,66 @@
   {% endif %}
 </head>
 
-<body>
-  {% if current_user.is_authenticated %}
-  <div>
-    <ul id="slide-out" class="sidenav">
-      <li>
-        <div class="user-view">
-          <div class="background">
-            <img src="{{ url_for('static', filename='cover_pictures/' +
-            current_user.CoverPicture) }}" alt="cover picture">
-          </div>
-          <a href="#user"><img src="{{ url_for('static', filename='profile_pictures/' +
-            current_user.ProfilePicture) }}" alt="Profile" class="circle"></a>
-          <a href="#name"><span class="white-text name">{{ current_user.UserName }}</span></a>
-          <a href="#email"><span class="white-text email">{{ current_user.Email }}</span></a>
-        </div>
-      </li>
-      <li><a class="waves-effect" href="{{ url_for('main.profile') }}">Profile</a></li>
-      <li><a class="waves-effect"><i class="material-icons">bookmark</i>Bookmarks</a></li>
-      <li><a class="waves-effect"><i class="material-icons">mode_edit</i> Posts</a></li>
-      <li>
-        <div class="divider"></div>
-      </li>
-      <li><a class="waves-effect" href="{{ url_for('users.logout') }}">Logout</a></li>
-    </ul>
-  </div>
-  {% endif %}
+<body class="fixed-sn">
 
-  <nav>
-    <div class="nav-wrapper container">
-      <a href="/" class="brand-logo">Reverie</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        {% if current_user.is_authenticated %}
-        <li style="cursor: pointer"><i class="material-icons">notifications_none</i></li>
-        <li class="sidenav-trigger" data-target="slide-out" style="cursor: pointer">
-          <img class="img-nav circle" src="{{ url_for('static', filename='profile_pictures/' +
-            current_user.ProfilePicture) }}" alt="Profile" class="circle">
+  <!--Double navigation-->
+  <header style="color: white">
+    <nav class="navbar blue-gradient fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
+      <!-- Breadcrumb-->
+      <!-- <a class="custom-nav" href="#">Navbar</a> -->
+      <ul class="nav navbar-nav nav-flex-icons ml-auto">
+        <li class="nav-item">
+          <a class="nav-link"><i class="fas fa-envelope"></i> <span
+              class="clearfix d-none d-sm-inline-block">Contact</span></a>
         </li>
-        {% else %}
-        <li><a href="{{ url_for('users.login') }}">Login</a></li>
-        <li><a href="{{ url_for('users.register') }}">Register</a></li>
+        <li class="nav-item">
+          <a class="nav-link"><i class="fas fa-comments"></i> <span
+              class="clearfix d-none d-sm-inline-block">Support</span></a>
+        </li>
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link waves-effect waves-light">1
+            <i class="fas fa-envelope"></i>
+          </a>
+        </li>
+        <li class="nav-item avatar dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0"
+              alt="avatar image">
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
+            aria-labelledby="navbarDropdownMenuLink-55">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
         {% endif %}
       </ul>
-    </div>
-  </nav>
+    </nav>
+    <!-- /.Navbar -->
+  </header>
+  <!--/.Double navigation-->
 
 
 
-  <!-- This is the flashed messages printed -->
-  {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-  {% for category, message in messages %}
-  <div class="ui {{category}} message">
-    <i class="close icon"></i>
-    <div class="header">
-      {{ message }}
-    </div>
-  </div>
-  {% endfor %}
-  {% endif %}
-  {% endwith %}
+
 
   <!-- This is where the inherited html outputted -->
   {% block content %}{% endblock %}
-  <!-- Compiled and minified JavaScript -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var elems = document.querySelectorAll('.sidenav');
-      var instances = M.Sidenav.init(elems);
-    });
-    $('.button-collapse').sideNav({
-      menuWidth: 300,
-      closeOnClick: true,
-      edge: 'right', // <--- CHECK THIS OUT
-    }
-    );
-    $('.collapsible').collapsible();
-  </script>
+  <!-- JQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.7/js/mdb.min.js"></script>
+  <script href="{{ url_for('static', filename='mdb.min.js') }}"></script>
 </body>
 
 </html>

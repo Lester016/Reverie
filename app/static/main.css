@@ -1,11 +1,5 @@
-.img-nav {
-    max-width: 50px;
-    margin-top: 8px;
-}
-.img-nav-md {
-    max-width: 150px;
-}
-.container-fluid {
-    max-width: 90%;
-    margin: auto;
+.custom-nav {
+    font-size: 30px;
+    font-weight: 900;
+    padding: 15px;
 }
