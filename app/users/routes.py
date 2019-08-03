@@ -16,16 +16,17 @@ def register():
         return redirect(url_for('main.home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        username = form.username.data
+        firstName = form.firstName.data
+        lastName = form.lastName.data
         email = form.email.data.lower()
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('UTF-8') # Encrypt the password stored in form.password.data
-        user = User(UserName=username, Email=email, Password=hashed_password)
+        user = User(FirstName=firstName, LastName=lastName, Email=email, Password=hashed_password)
         db.session.add(user)
         db.session.commit()
         login_user(user, duration=timedelta) # Login the user with the session duration set
         flash('Signed in!', 'success') # Second argument is optional, uses to assign what category the message is
-        return redirect(url_for('main.home'))
+        return redirect(url_for('users.login'))
     return render_template('register.html', form=form, title='Register')
 
 

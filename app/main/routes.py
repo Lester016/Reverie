@@ -1,4 +1,7 @@
 from flask import (render_template, request, Blueprint)
+from flask_login import (login_user, current_user, logout_user, login_required)
+from app.users.forms import RegistrationForm
+from app.models import User
 
 main = Blueprint('main', __name__)
 
@@ -54,9 +57,12 @@ posts = [
 ]
 
 
-@main.route("/")
+@main.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('index.html', posts=posts)
+    if current_user.is_authenticated:
+        return render_template('user-index.html', posts=posts)
+    
+    return render_template('index.html', posts=posts, form=form)
 
 
 @main.route("/profile")

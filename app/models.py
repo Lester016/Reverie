@@ -1,5 +1,6 @@
 from datetime import datetime
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer # Use to generate token
+# Use to generate token
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from app import db, login_manager
 from flask_login import UserMixin
@@ -12,7 +13,8 @@ def load_user(user_id):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    UserName = db.Column(db.String(20), unique=True, nullable=False)
+    FirstName = db.Column(db.String(20), nullable=False)
+    LastName = db.Column(db.String(20), nullable=False)
     Email = db.Column(db.String(120), unique=True, nullable=False)
     Password = db.Column(db.String(60), nullable=False)
     ProfilePicture = db.Column(db.String(20), nullable=False,
@@ -20,7 +22,7 @@ class User(db.Model, UserMixin):
     CoverPicture = db.Column(db.String(20), nullable=False,
                              default='default.jpg')
 
-
     # Function to print the value of User model
+
     def __repr__(self):
-        return f"User('{self.id}', '{self.UserName}', '{self.Email}', '{self.Password}')"
+        return f"User('{self.id}', '{self.FirstName}', '{self.LastName}', '{self.Email}', '{self.Password}')"

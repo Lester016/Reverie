@@ -1,59 +1,88 @@
 {% extends "layout.html" %}
 {% block content%}
-<main class="row justify-content-md-center">
-    <!-- Default form login -->
-    <form class="col-lg-5 col-md-6 text-center border border-light p-5" method="POST">
-        {{ form.hidden_tag() }}
-        <p class="h4 mb-4">Sign in</p>
+<main class="justify-content-center align-items-center row" style="margin: 0;">
 
-        <!-- Email -->
-        {{ form.email(class='form-control mb-4', placeholder="E-mail") }}
-        {% for error in form.email.errors %}
-        <span style="color: #f44336">{{ error }}</span>
-        {% endfor %}
-        <!-- Password -->
-        {{ form.password(class='form-control mb-4', placeholder="Password") }}
-        {% for error in form.password.errors %}
-        <span style="color: #f44336">{{ error }}</span>
-        {% endfor %}
-        <div class="d-flex justify-content-around">
-            <div>
-                <!-- Remember me -->
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
-                    <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
+    <div class="col-lg-5 col-md-6 mb-4">
+
+        <section class="form-elegant ">
+
+            <!--Form without header-->
+            <form class="card">
+
+                <div class="card-body mx-4">
+
+                    <!--Header-->
+                    <div class="text-center">
+                        <h3 class="dark-grey-text mb-5">
+                            <strong>Sign in</strong>
+                        </h3>
+                    </div>
+
+                    <div class="md-form">
+                        {{ form.email(class='form-control') }}
+                        {{ form.email.label }}
+                        {% for error in form.email.errors %}
+                        <span style="color: #f44336">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="md-form">
+                        {{ form.password(class='form-control') }}
+                        {{ form.password.label }}
+                        {% for error in form.password.errors %}
+                        <span style="color: #f44336">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="d-flex justify-content-around font-small blue-text" style="margin-bottom:50px;">
+                        <div>
+                            <!-- Remember me -->
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
+                                <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
+                            </div>
+                        </div>
+                        <div>
+                            <!-- Forgot password -->
+                            <a href="">Forgot password?</a>
+                        </div>
+                    </div>
+                    <div class="text-center mb-3">
+                        <button type="button" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Sign
+                            in</button>
+                    </div>
+                    <p class="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"> or Sign
+                        in
+                        with:</p>
+
+                    <div class="row my-3 d-flex justify-content-center">
+                        <!--Facebook-->
+                        <button type="button"
+                            class="btn btn-white btn-rounded mr-md-3 z-depth-1a waves-effect waves-light">
+                            <i class="fab fa-facebook-f blue-text text-center"></i>
+                        </button>
+                        <!--Google +-->
+                        <button type="button" class="btn btn-white btn-rounded z-depth-1a">
+                            <i class="fab fa-google-plus-g blue-text"></i>
+                        </button>
+                    </div>
+
                 </div>
-            </div>
-            <div>
-                <!-- Forgot password -->
-                <a href="">Forgot password?</a>
-            </div>
-        </div>
 
-        <!-- Sign in button -->
-        {{ form.submit(class="btn btn-info btn-block my-4") }}
-        <!-- Register -->
-        <p>Not a member?
-            <a href="">Register</a>
-        </p>
+                <!--Footer-->
+                <div class="modal-footer mx-5 pt-3 mb-1">
+                    <p class="font-small grey-text d-flex justify-content-end">Not a member yet?
+                        <a href="{{ url_for('users.register') }}" class="blue-text ml-1"> Sign Up</a>
+                    </p>
+                </div>
 
-        <!-- Social login -->
-        <p>or sign in with:</p>
+            </form>
+            <!--/Form without header-->
 
-        <a type="button" class="light-blue-text mx-2">
-            <i class="fab fa-facebook-f"></i>
-        </a>
-        <a type="button" class="light-blue-text mx-2">
-            <i class="fab fa-twitter"></i>
-        </a>
-        <a type="button" class="light-blue-text mx-2">
-            <i class="fab fa-linkedin-in"></i>
-        </a>
-        <a type="button" class="light-blue-text mx-2">
-            <i class="fab fa-github"></i>
-        </a>
+        </section>
 
-    </form>
-    <!-- Default form login -->
+    </div>
+
+
 </main>
+
 {% endblock %}
