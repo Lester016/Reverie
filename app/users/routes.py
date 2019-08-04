@@ -36,7 +36,7 @@ def login():
         return redirect(url_for('main.home'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(UserName=form.username.data).first()
+        user = User.query.filter_by(Email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.Password, form.password.data): # If user exists decrypt the hashed_password
             login_user(user, remember=form.remember.data,
                        duration=timedelta(minutes=15))
