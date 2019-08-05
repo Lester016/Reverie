@@ -1,19 +1,145 @@
 {% extends "layout.html" %}
 {% block content%}
-<div class="container">
-    <h1>{{ current_user.UserName }}</h1>
-    <p>{{ current_user.Email }}</p>
-    <img class="img-nav-md circle" src="{{ url_for('static', filename='profile_pictures/' +
-            current_user.ProfilePicture) }}" alt="Profile" class="circle">
-    <h1>Your Stories</h1>
-    <button>Write a story</button>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1>{{ current_user.FirstName }} {{ current_user.LastName }}</h1>
+                <p>{{ current_user.Email }}</p>
+            </div>
+            <div class="col-sm">
+                <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit Profile</a>
+            </div>
+            <div class="col-sm">
+                <div class="avatar mx-auto white" style="max-width: 150px;">
+                    <img src="{{ url_for('static', filename='profile_pictures/' + current_user.ProfilePicture) }}"
+                        alt="profile-piture" class="rounded-circle img-fluid">
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                    aria-selected="true">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                    aria-controls="profile" aria-selected="false">Bookmark</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                    aria-controls="contact" aria-selected="false">Followers</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <!-- Section: Blog v.1 -->
+                <section class="my-5">
+                    {% for i in range(5) %}
+                    <!-- Grid row -->
+                    <div class="row">
 
-    <hr>
-    <br>
-    {% for post in posts %}
-    <h4>{{ post.Title }}</h4>
-    <p>Published on july 15 · {{ post.TimeRead }}</p>
-    <hr>
-    {% endfor %}
-</div>
+                        <!-- Grid column -->
+                        <div class="col-lg-5">
+
+                            <!-- Featured image -->
+                            <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
+                                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/img%20(27).jpg"
+                                    alt="Sample image">
+                                <a>
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-lg-7">
+
+                            <!-- Category -->
+                            <a href="#!" class="green-text">
+                                <h6 class="font-weight-bold mb-3"><i class="fas fa-utensils pr-2"></i>Food</h6>
+                            </a>
+                            <!-- Post title -->
+                            <h3 class="font-weight-bold mb-3"><strong>Title of the news</strong></h3>
+                            <!-- Excerpt -->
+                            <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id
+                                quod maxime
+                                placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut
+                                officiis debitis.</p>
+                            <!-- Post data -->
+                            <p>by <a><strong>Carine Fox</strong></a>, 19/08/2018</p>
+                            <!-- Read more button -->
+                            <a class="btn btn-outline-primary waves-effect btn-sm">Edit</a>
+                            <a class="btn btn-outline-danger waves-effect btn-sm">Delete</a>
+                        </div>
+                        <!-- Grid column -->
+
+                    </div>
+                    <!-- Grid row -->
+
+                    <hr class="my-5">
+                    {% endfor %}
+                </section>
+                <!-- Section: Blog v.1 -->
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Food truck fixie
+                locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit,
+                blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
+                Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
+                PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS
+                salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
+                sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
+                stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                <!-- Section: Personal card -->
+                <section class="my-5">
+
+                    <!-- Grid row -->
+                    <div class="row">
+                        {% for i in range(5) %}
+                        <!-- Grid column -->
+                        <div class="col-md-4 col-lg-2">
+
+                            <!-- Card -->
+                            <div class="card card-personal">
+
+                                <!-- Card image-->
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Photos/Avatars/img%20(29).jpg"
+                                    alt="Card image cap">
+                                <!-- Card image-->
+
+                                <!-- Card content -->
+                                <div class="card-body">
+                                    <!-- Title-->
+                                    <a>
+                                        <h4 class="card-title title-one">Clara Surname</h4>
+                                    </a>
+                                    <p class="card-meta">Joined in 2013</p>
+                                    <!-- Text -->
+                                    <hr>
+                                    <a class="card-meta"><span><i class="fas fa-user"></i>22 Followers</span></a>
+                                    <a class="card-meta"><span><i class="fas fa-user"></i>222 Following</span></a>
+                                </div>
+                                <!-- Card content -->
+
+                            </div>
+                            <!-- Card -->
+
+                        </div>
+                        <!-- Grid column -->
+                        {% endfor %}
+
+                    </div>
+                    <!-- Grid row -->
+
+                </section>
+                <!-- Section: Personal card -->
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}

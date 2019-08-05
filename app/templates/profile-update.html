@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content%}
+<main>
+    <div class="container">
+        <form class="row" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="col-sm">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="md-form">
+                            <h1>{{ form.firstName }}</h1>
+                        </div>
+                        <div class="md-form">
+                            <h1>{{ form.lastName }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form">
+                    {{ form.email(class='form-control') }}
+                    {{ form.email.label }}
+                    {% for error in form.email.errors %}
+                    <span style="color: #f44336">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-sm">
+                {{ form.submit(class="btn btn-primary btn-rounded btn-sm") }}
+            </div>
+            <div class="col-sm">
+                    <div class="file-field">
+                            <a class="btn-floating blue-gradient mt-0 float-left">
+                              <i class="far fa-heart" aria-hidden="true"></i>
+                              {{ form.profilePicture }}
+                            </a>
+
+                            <div class="file-path-wrapper">
+                              {{ form.profilePicture.label}}
+                            </div>
+                          </div>
+                <div class="avatar mx-auto white" style="max-width: 150px;">
+                    <img src="{{ url_for('static', filename='profile_pictures/' + current_user.ProfilePicture) }}"
+                        alt="profile-piture" class="rounded-circle img-fluid">
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

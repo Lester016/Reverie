@@ -14,8 +14,8 @@ def home():
         return render_template('user-index.html')
     form = RegistrationForm()
     if form.validate_on_submit():
-        firstName = form.firstName.data
-        lastName = form.lastName.data
+        firstName = form.firstName.data.capitalize()
+        lastName = form.lastName.data.capitalize()
         email = form.email.data.lower()
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('UTF-8') # Encrypt the password stored in form.password.data
@@ -26,8 +26,3 @@ def home():
         flash('Signed in!', 'success') # Second argument is optional, uses to assign what category the message is
         return redirect(url_for('main.home'))
     return render_template('index.html', form=form)
-
-
-@main.route("/profile")
-def profile():
-    return render_template('profile.html', posts=posts)

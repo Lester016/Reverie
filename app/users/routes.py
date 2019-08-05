@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
 from flask_login import (login_user, current_user, logout_user, login_required)
 from app import db, bcrypt
 from app.models import User
-from app.users.forms import RegistrationForm, LoginForm
+from app.users.forms import RegistrationForm, LoginForm, ProfileUpdate
 from datetime import timedelta
 
 # The first argument is use to navigate different routes using that Blueprint
@@ -16,16 +16,19 @@ def register():
         return redirect(url_for('main.home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        firstName = form.firstName.data
-        lastName = form.lastName.data
+        firstName = form.firstName.data.capitalize()
+        lastName = form.lastName.data.capitalize()
         email = form.email.data.lower()
         hashed_password = bcrypt.generate_password_hash(
-            form.password.data).decode('UTF-8') # Encrypt the password stored in form.password.data
-        user = User(FirstName=firstName, LastName=lastName, Email=email, Password=hashed_password)
+            form.password.data).decode('UTF-8')  # Encrypt the password stored in form.password.data
+        user = User(FirstName=firstName, LastName=lastName,
+                    Email=email, Password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        login_user(user, duration=timedelta) # Login the user with the session duration set
-        flash('Signed in!', 'success') # Second argument is optional, uses to assign what category the message is
+        # Login the user with the session duration set
+        login_user(user, duration=timedelta)
+        # Second argument is optional, uses to assign what category the message is
+        flash('Signed in!', 'success')
         return redirect(url_for('users.login'))
     return render_template('register.html', form=form, title='Register')
 
@@ -37,11 +40,13 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(Email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.Password, form.password.data): # If user exists decrypt the hashed_password
+        # If user exists decrypt the hashed_password
+        if user and bcrypt.check_password_hash(user.Password, form.password.data):
             login_user(user, remember=form.remember.data,
                        duration=timedelta(minutes=15))
             flash('You have been logged in!', 'success')
-            nextPage = request.args.get('next') # When login.view is triggered the 'next' value is added to te url
+            # When login.view is triggered the 'next' value is added to te url
+            nextPage = request.args.get('next')
             return redirect(nextPage) if nextPage else redirect(url_for('main.home'))
         flash('Login Unsuccessful. Invalid Credentials', 'danger')
     return render_template('login.html', form=form, title="Sign in")
@@ -49,5 +54,34 @@ def login():
 
 @users.route("/logout")
 def logout():
-    logout_user() # Delete the session or the current_user data
+    logout_user()  # Delete the session or the current_user data
     return redirect(url_for('users.login'))
+
+
+@users.route("/profile")
+@login_required
+def profile():
+    return render_template('profile.html')
+
+
+@users.route("/profile_update", methods=['GET', 'POST'])
+@login_required
+def profile_update():
+    form = ProfileUpdate()
+    if form.validate_on_submit():
+        if form.profilePicture.data:
+            pictureFile = save_picture(form.profilePicture.data)
+            current_user.ProfilePicture = pictureFile
+        current_user.FirstName = form.firstName.data.capitalize()
+        current_user.LastName = form.lastName.data.capitalize()
+        current_user.Email = form.email.data
+        db.session.commit()
+        flash('Successfully updated!')
+        return redirect(url_for('users.profile'))
+    elif request.method == 'GET':
+        form.firstName.data = current_user.FirstName
+        form.lastName.data = current_user.LastName
+        form.email.data = current_user.Email
+        form.profilePicture.data = current_user.ProfilePicture
+
+    return render_template('profile-update.html', form=form, title='Profile Update')

@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileField
 from wtforms import (StringField, PasswordField, SubmitField, BooleanField)
 from wtforms.validators import (
     DataRequired, Length, Email, EqualTo, ValidationError)
@@ -34,3 +35,20 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Sign in')
+
+
+class ProfileUpdate(FlaskForm):
+    firstName = StringField('First Name', validators=[
+        DataRequired(), Length(max=16)])
+    lastName = StringField('Last Name', validators=[
+        DataRequired(), Length(max=16)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    profilePicture = FileField('Update profile picture', validators=[
+                               FileAllowed(['jpg', 'png', 'jpeg'])])
+    submit = SubmitField('Update')
+
+    def validate_email(self, email):
+        if email.data != current_user.Email:
+            user = User.query.filter_by(Email=email.data).first()
+            if user:
+                raise ValidationError("Email is already taken.")
