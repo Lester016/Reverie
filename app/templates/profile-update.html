@@ -2,7 +2,8 @@
 {% block content%}
 <main>
     <div class="container">
-        <form class="row" method="POST">
+        <!-- Enctype is necessary to enable the form for fileinput -->
+        <form class="row" method="POST" enctype="multipart/form-data"> 
             {{ form.hidden_tag() }}
             <div class="col-sm">
                 <div class="row">
@@ -27,16 +28,19 @@
                 {{ form.submit(class="btn btn-primary btn-rounded btn-sm") }}
             </div>
             <div class="col-sm">
-                    <div class="file-field">
-                            <a class="btn-floating blue-gradient mt-0 float-left">
-                              <i class="far fa-heart" aria-hidden="true"></i>
-                              {{ form.profilePicture }}
-                            </a>
+                <div class="file-field">
+                    <a class="btn-floating blue-gradient mt-0 float-left">
+                        <i class="far fa-heart" aria-hidden="true"></i>
+                        {{ form.profilePicture }}
+                    </a>
 
-                            <div class="file-path-wrapper">
-                              {{ form.profilePicture.label}}
-                            </div>
-                          </div>
+                    <div class="file-path-wrapper">
+                        {{ form.profilePicture.label }}
+                        {% for error in form.profilePicture.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
                 <div class="avatar mx-auto white" style="max-width: 150px;">
                     <img src="{{ url_for('static', filename='profile_pictures/' + current_user.ProfilePicture) }}"
                         alt="profile-piture" class="rounded-circle img-fluid">

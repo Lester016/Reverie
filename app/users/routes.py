@@ -4,6 +4,7 @@ from flask_login import (login_user, current_user, logout_user, login_required)
 from app import db, bcrypt
 from app.models import User
 from app.users.forms import RegistrationForm, LoginForm, ProfileUpdate
+from app.users.utils import save_picture
 from datetime import timedelta
 
 # The first argument is use to navigate different routes using that Blueprint
@@ -83,5 +84,6 @@ def profile_update():
         form.lastName.data = current_user.LastName
         form.email.data = current_user.Email
         form.profilePicture.data = current_user.ProfilePicture
+
 
     return render_template('profile-update.html', form=form, title='Profile Update')
