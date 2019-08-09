@@ -65,7 +65,7 @@ def profile():
     return render_template('profile.html')
 
 
-@users.route("/profile_update", methods=['GET', 'POST'])
+@users.route("/profile/update", methods=['GET', 'POST'])
 @login_required
 def profile_update():
     form = ProfileUpdate()
@@ -84,6 +84,5 @@ def profile_update():
         form.lastName.data = current_user.LastName
         form.email.data = current_user.Email
         form.profilePicture.data = current_user.ProfilePicture
-
 
     return render_template('profile-update.html', form=form, title='Profile Update')

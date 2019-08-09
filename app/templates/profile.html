@@ -22,15 +22,10 @@
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
                     aria-selected="true">Posts</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                    aria-controls="profile" aria-selected="false">Bookmark</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                    aria-controls="contact" aria-selected="false">Followers</a>
-            </li>
         </ul>
+        <div class="float-right">
+            <a href="{{ url_for('posts.create_post') }}" class="btn btn-outline-primary waves-effect"><i class="fas fa-magic mr-1"></i>Make a story</a>
+        </div>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <!-- Section: Blog v.1 -->
@@ -84,62 +79,6 @@
                 </section>
                 <!-- Section: Blog v.1 -->
             </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Food truck fixie
-                locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit,
-                blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
-                Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
-                PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS
-                salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
-                sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
-                stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</div>
-            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-
-                <!-- Section: Personal card -->
-                <section class="my-5">
-
-                    <!-- Grid row -->
-                    <div class="row">
-                        {% for i in range(5) %}
-                        <!-- Grid column -->
-                        <div class="col-md-4 col-lg-2">
-
-                            <!-- Card -->
-                            <div class="card card-personal">
-
-                                <!-- Card image-->
-                                <img class="card-img-top"
-                                    src="https://mdbootstrap.com/img/Photos/Avatars/img%20(29).jpg"
-                                    alt="Card image cap">
-                                <!-- Card image-->
-
-                                <!-- Card content -->
-                                <div class="card-body">
-                                    <!-- Title-->
-                                    <a>
-                                        <h4 class="card-title title-one">Clara Surname</h4>
-                                    </a>
-                                    <p class="card-meta">Joined in 2013</p>
-                                    <!-- Text -->
-                                    <hr>
-                                    <a class="card-meta"><span><i class="fas fa-user"></i>22 Followers</span></a>
-                                    <a class="card-meta"><span><i class="fas fa-user"></i>222 Following</span></a>
-                                </div>
-                                <!-- Card content -->
-
-                            </div>
-                            <!-- Card -->
-
-                        </div>
-                        <!-- Grid column -->
-                        {% endfor %}
-
-                    </div>
-                    <!-- Grid row -->
-
-                </section>
-                <!-- Section: Personal card -->
-            </div>
-        </div>
     </div>
 </main>
 {% endblock %}

@@ -31,14 +31,16 @@ def create_app(config_class=Config):
 
     from app.main.routes import main
     from app.users.routes import users
+    from app.posts.routes import posts
     from app.errors.handlers import errors
 
     app.register_blueprint(main)
     app.register_blueprint(users)
+    app.register_blueprint(posts)
     app.register_blueprint(errors)
 
     return app
 
 # This is for initializing a db
-# x = create_app()
-# x.app_context().push()
+x = create_app()
+x.app_context().push()
