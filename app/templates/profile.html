@@ -8,7 +8,8 @@
                 <p>{{ current_user.Email }}</p>
             </div>
             <div class="col-sm">
-                <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit Profile</a>
+                <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
+                    Profile</a>
             </div>
             <div class="col-sm">
                 <div class="avatar mx-auto white" style="max-width: 150px;">
@@ -24,13 +25,14 @@
             </li>
         </ul>
         <div class="float-right">
-            <a href="{{ url_for('posts.create_post') }}" class="btn btn-outline-primary waves-effect"><i class="fas fa-magic mr-1"></i>Make a story</a>
+            <a href="{{ url_for('posts.create_post') }}" class="btn btn-outline-primary waves-effect"><i
+                    class="fas fa-magic mr-1"></i>Make a story</a>
         </div>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <!-- Section: Blog v.1 -->
                 <section class="my-5">
-                    {% for i in range(5) %}
+                    {% for post in posts %}
                     <!-- Grid row -->
                     <div class="row">
 
@@ -38,9 +40,9 @@
                         <div class="col-lg-5">
 
                             <!-- Featured image -->
-                            <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
-                                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/img%20(27).jpg"
-                                    alt="Sample image">
+                            <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">   
+                                <img class="img-fluid" src="{{ url_for('static', filename='post_images/' +
+                                    post.ImageFile) }}" alt="Post Image">
                                 <a>
                                     <div class="mask rgba-white-slight"></div>
                                 </a>
@@ -57,14 +59,11 @@
                                 <h6 class="font-weight-bold mb-3"><i class="fas fa-utensils pr-2"></i>Food</h6>
                             </a>
                             <!-- Post title -->
-                            <h3 class="font-weight-bold mb-3"><strong>Title of the news</strong></h3>
+                            <h3 class="font-weight-bold mb-3"><strong>{{ post.Title }}</strong></h3>
                             <!-- Excerpt -->
-                            <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id
-                                quod maxime
-                                placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut
-                                officiis debitis.</p>
+                            <p>{{ post.Content }}</p>
                             <!-- Post data -->
-                            <p>by <a><strong>Carine Fox</strong></a>, 19/08/2018</p>
+                            <p>by <a><strong>{{ post.Author.FirstName }} {{ post.Author.LastName }}</strong></a>, 19/08/2018</p>
                             <!-- Read more button -->
                             <a class="btn btn-outline-primary waves-effect btn-sm">Edit</a>
                             <a class="btn btn-outline-danger waves-effect btn-sm">Delete</a>
@@ -79,6 +78,6 @@
                 </section>
                 <!-- Section: Blog v.1 -->
             </div>
-    </div>
+        </div>
 </main>
 {% endblock %}

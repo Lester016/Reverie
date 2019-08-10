@@ -2,7 +2,7 @@ from flask import (render_template, url_for, flash,
                    redirect, request, Blueprint)
 from flask_login import (login_user, current_user, logout_user, login_required)
 from app import db, bcrypt
-from app.models import User
+from app.models import User, Post
 from app.users.forms import RegistrationForm, LoginForm, ProfileUpdate
 from app.users.utils import save_picture
 from datetime import timedelta
@@ -62,7 +62,9 @@ def logout():
 @users.route("/profile")
 @login_required
 def profile():
-    return render_template('profile.html')
+    posts = Post.query.filter(Post.UserID.like(current_user.id)).order_by(
+        (Post.DatePosted).desc()).all()
+    return render_template('profile.html', title='Profile', posts=posts)
 
 
 @users.route("/profile/update", methods=['GET', 'POST'])

@@ -1,10 +1,13 @@
 {% extends "layout.html" %}
 {% block content%}
 <main>
-    <form action="" class="container">
-        <div class="d-flex justify-content-center">
-            <a type="button" class="btn-floating btn-md blue-gradient"><i class="fas fa-plus"
-                    aria-hidden="true"></i></a>
+    <form class="container" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="d-flex justify-content-center file-field">
+            <a class="btn-floating blue-gradient mt-0 float-left">
+                <i class="fas fa-plus" aria-hidden="true"></i>
+                {{ form.postImage }}
+            </a>
         </div>
         <div class="container">
             <!-- Form -->
@@ -12,14 +15,14 @@
 
                 <!-- Name -->
                 <div class="md-form mt-3">
-                    <input type="text" id="materialContactFormName" class="form-control">
-                    <label for="materialContactFormName">Title</label>
+                    {{ form.title(class="form-control") }}
+                    {{ form.title.label }}
                 </div>
 
                 <!--Message-->
                 <div class="md-form">
-                    <textarea id="materialContactFormMessage" class="form-control md-textarea" rows="3"></textarea>
-                    <label for="materialContactFormMessage">Content</label>
+                    {{ form.content(class="form-control md-textarea") }}
+                    {{ form.content.label }}
                 </div>
 
                 <!-- Copy -->

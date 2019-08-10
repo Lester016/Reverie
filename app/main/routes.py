@@ -2,7 +2,7 @@ from flask import (render_template, request,
                    Blueprint, redirect, url_for, flash)
 from flask_login import (login_user, current_user, logout_user, login_required)
 from app import db, bcrypt
-from app.models import User
+from app.models import User, Post
 from app.main.forms import RegistrationForm
 from datetime import timedelta
 
@@ -30,4 +30,6 @@ def home():
         return redirect(url_for('main.home'))
     if current_user.is_authenticated:
         return render_template('user-index.html')
-    return render_template('index.html', form=form)
+
+    posts = Post.query.order_by(Post.DatePosted.desc())
+    return render_template('index.html', form=form, posts=posts)

@@ -19,10 +19,21 @@ class User(db.Model, UserMixin):
     Password = db.Column(db.String(60), nullable=False)
     ProfilePicture = db.Column(db.String(20), nullable=False,
                                default='default.png')
-    CoverPicture = db.Column(db.String(20), nullable=False,
-                             default='default.jpg')
-
+    Posts = db.relationship('Post', backref='Author', lazy=True)
     # Function to print the value of User model
 
     def __repr__(self):
         return f"User('{self.id}', '{self.FirstName}', '{self.LastName}', '{self.Email}', '{self.Password}')"
+
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Title = db.Column(db.String(100), nullable=False)
+    ImageFile = db.Column(db.String(20))
+    DatePosted = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
+    Content = db.Column(db.Text, nullable=False)
+    UserID = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.datePosted}')"
