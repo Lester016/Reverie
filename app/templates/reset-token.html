@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content%}
+<main class="justify-content-center align-items-center row" style="margin: 0;">
+
+    <div class="col-lg-5 col-md-6 mb-4">
+
+        <section class="form-elegant ">
+
+            <!--Form without header-->
+            <form class="card" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="card-body mx-4">
+
+                    <!--Header-->
+                    <div class="text-center">
+                        <h3 class="dark-grey-text mb-5">
+                            <strong>Sign in</strong>
+                        </h3>
+                    </div>
+
+                    <div class="md-form">
+                        {{ form.password(class='form-control') }}
+                        {{ form.password.label }}
+                        {% for error in form.password.errors %}
+                        <span style="color: #f44336">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="md-form">
+                        {{ form.confirmPassword(class='form-control') }}
+                        {{ form.confirmPassword.label }}
+                        {% for error in form.confirmPassword.errors %}
+                        <span style="color: #f44336">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="text-center mb-3">
+                        <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Confirm
+                            Changes</button>
+                    </div>
+
+                </div>
+
+            </form>
+            <!--/Form without header-->
+
+        </section>
+
+    </div>
+
+
+</main>
+
+{% endblock %}

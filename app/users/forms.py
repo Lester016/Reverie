@@ -52,3 +52,22 @@ class ProfileUpdate(FlaskForm):
             user = User.query.filter_by(Email=email.data).first()
             if user:
                 raise ValidationError("Email is already taken.")
+
+
+class RequestResetForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request password reset')
+
+    def validate_email(self, field):
+        user = User.query.filter_by(email=field.data).first()
+
+        if user is None:
+            raise ValidationError(
+                "Email doesn't exists, You must register first")
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirmPassword = PasswordField('Confirm Password', validators=[
+                                    DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset password')

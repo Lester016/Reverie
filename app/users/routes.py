@@ -3,8 +3,8 @@ from flask import (render_template, url_for, flash,
 from flask_login import (login_user, current_user, logout_user, login_required)
 from app import db, bcrypt
 from app.models import User, Post
-from app.users.forms import RegistrationForm, LoginForm, ProfileUpdate
-from app.users.utils import save_picture
+from app.users.forms import RegistrationForm, LoginForm, ProfileUpdate, RequestResetForm
+from app.users.utils import save_picture, send_reset_email
 from datetime import timedelta
 
 # The first argument is use to navigate different routes using that Blueprint
@@ -88,3 +88,36 @@ def profile_update():
         form.profilePicture.data = current_user.ProfilePicture
 
     return render_template('profile-update.html', form=form, title='Profile Update')
+
+
+@users.route("/login/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(Email=form.email.data).first()
+        send_reset_email(user)
+        flash("An email has been sent you can reset your email now.", 'success')
+        return redirect(url_for('users.login'))
+    return render_template('reset-request.html', title='Reset Password', form=form)
+
+
+@users.route("/login/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('Invalid or expired token', 'danger')
+        return redirect(url_for('users.reset_request'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode('UTF-8')
+        user.password = hashed_password
+        db.session.commit()
+        login_user(user, duration=timedelta)
+        flash(f'Your password on {user.email}, has been updated', 'success')
+        return redirect(url_for('main.home'))
+    return render_template('reset-token.html', title='Reset Password', form=form)
