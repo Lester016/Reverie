@@ -22,8 +22,22 @@ class User(db.Model, UserMixin):
     Posts = db.relationship('Post', backref='Author', lazy=True)
     # Function to print the value of User model
 
+    # Generate a reset token in the s.dumps with SECRET_KEY as secret_key argument in Serializer.
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.id}).decode('utf-8') # Store the token into SECRET_KEY.
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(current_app.config['SECRET_KEY']) # Get the token stored in SECRET_KEY.
+        try:
+            user_id = s.loads(token)['user_id'] # Load or Decrypt the token stored in SECRET_KEY.
+        except:
+            return None
+        return User.query.get(user_id)
+
     def __repr__(self):
-        return f"User('{self.id}', '{self.FirstName}', '{self.LastName}', '{self.Email}', '{self.Password}')"
+        return f"User('{self.FirstName}', '{self.LastName}', '{self.Email}', '{self.ProfilePicture}')"
 
 
 class Post(db.Model):

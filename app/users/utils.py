@@ -12,7 +12,6 @@ def save_picture(imageFile):
     pictureFN = randomHex + fExt
     picturePN = os.path.join(current_app.root_path,
                              'static/profile_pictures', pictureFN)
-
     outputSize = (325, 325)
     resizedImage = Image.open(imageFile)
     resizedImage.thumbnail(outputSize)
@@ -22,7 +21,7 @@ def save_picture(imageFile):
 
 
 def send_reset_email(user):
-    token = user.get_reset_token()
+    token = user.get_reset_token() # Store a token generated in this function in token variable.
     msg = Message('Password Reset Request',
                   sender='noreply@reverie.com',
                   recipients=[user.Email])

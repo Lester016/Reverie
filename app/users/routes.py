@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
 from flask_login import (login_user, current_user, logout_user, login_required)
 from app import db, bcrypt
 from app.models import User, Post
-from app.users.forms import RegistrationForm, LoginForm, ProfileUpdate, RequestResetForm
+from app.users.forms import RegistrationForm, LoginForm, ProfileUpdate, RequestResetForm, ResetPasswordForm
 from app.users.utils import save_picture, send_reset_email
 from datetime import timedelta
 
@@ -90,6 +90,7 @@ def profile_update():
     return render_template('profile-update.html', form=form, title='Profile Update')
 
 
+# Send a reset token to user email.
 @users.route("/login/reset_password", methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:
@@ -97,7 +98,7 @@ def reset_request():
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(Email=form.email.data).first()
-        send_reset_email(user)
+        send_reset_email(user) # Call the function that will generate the email and token for the reset password.
         flash("An email has been sent you can reset your email now.", 'success')
         return redirect(url_for('users.login'))
     return render_template('reset-request.html', title='Reset Password', form=form)
@@ -118,6 +119,6 @@ def reset_token(token):
         user.password = hashed_password
         db.session.commit()
         login_user(user, duration=timedelta)
-        flash(f'Your password on {user.email}, has been updated', 'success')
+        flash(f'Your password on {user.Email}, has been updated', 'success')
         return redirect(url_for('main.home'))
     return render_template('reset-token.html', title='Reset Password', form=form)
