@@ -35,7 +35,7 @@
                     {% for post in posts %}
                     <!-- Grid row -->
                     <div class="row">
-
+                        {% if post.ImageFile %}
                         <!-- Grid column -->
                         <div class="col-lg-5">
 
@@ -50,6 +50,7 @@
 
                         </div>
                         <!-- Grid column -->
+                        {% endif %}
 
                         <!-- Grid column -->
                         <div class="col-lg-7">

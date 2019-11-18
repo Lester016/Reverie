@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block content%}
+{% block content %}
 <main class="bgh" style="margin: 0; margin-top:-20px;">
 
     <div class="row container-fluid mask rgba-black-light justify-content-center align-items-center"
@@ -210,7 +210,7 @@
         {% for post in posts %}
         <!-- Grid row -->
         <div class="row">
-
+            {% if post.ImageFile %}
             <!-- Grid column -->
             <div class="col-lg-5 col-xl-4">
 
@@ -225,7 +225,7 @@
 
             </div>
             <!-- Grid column -->
-
+            {% endif %}
             <!-- Grid column -->
             <div class="col-lg-7 col-xl-8">
 
