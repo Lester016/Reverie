@@ -29,7 +29,9 @@ def home():
         flash('Signed in!', 'success')
         return redirect(url_for('main.home'))
     if current_user.is_authenticated:
-        return render_template('user-index.html')
+        posts = Post.query.order_by(Post.DatePosted.desc())
+
+        return render_template('user-index.html', posts=posts)
 
     posts = Post.query.order_by(Post.DatePosted.desc())
     return render_template('index.html', form=form, posts=posts)

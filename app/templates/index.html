@@ -197,58 +197,39 @@
 
     </section>
     <!-- Section: Blog v.2 -->
-    <!-- Section: Blog v.3 -->
-    <section class="my-5">
-
-        <!-- Section heading -->
-        <h2 class="h1-responsive font-weight-bold text-center my-5">Recent posts</h2>
-        <!-- Section description -->
-        <p class="text-center dark-grey-text w-responsive mx-auto mb-5">Duis aute irure dolor in reprehenderit in
-            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-        {% for post in posts %}
-        <!-- Grid row -->
-        <div class="row">
-            {% if post.ImageFile %}
-            <!-- Grid column -->
-            <div class="col-lg-5 col-xl-4">
-
-                <!-- Featured image -->
-                <div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
-                    <img class="img-fluid" src="{{ url_for('static', filename='post_images/' +
-                        post.ImageFile) }}" alt="Post Image">
-                    <a>
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
-                </div>
-
-            </div>
-            <!-- Grid column -->
-            {% endif %}
-            <!-- Grid column -->
-            <div class="col-lg-7 col-xl-8">
-
-                <!-- Post title -->
-                <h3 class="font-weight-bold mb-3"><strong>{{ post.Title }}</strong></h3>
-                <!-- Excerpt -->
-                <p class="dark-grey-text">{{ post.Content }}</p>
-                <!-- Post data -->
-                <p>by <a class="font-weight-bold">{{ post.Author.FirstName }} {{ post.Author.LastName }}</a>, {{ post.DatePosted.strftime('%a %d, %Y') }}</p>
-                <!-- Read more button -->
-                <a class="btn btn-primary btn-md">Read more</a>
-
-            </div>
-            <!-- Grid column -->
-
-        </div>
-        <!-- Grid row -->
-
-        <hr class="my-5">
-        {% endfor %}
-
-    </section>
-    <!-- Section: Blog v.3 -->
 </div>
+<hr>
+<div class="container my-5">
+
+
+        <!--Section: Content-->
+        <section class="dark-grey-text">
+      
+          <div class="row pr-lg-5">
+            <div class="col-md-7 mb-4">
+      
+              <div class="view">
+                <img src="https://mdbootstrap.com/img/illustrations/graphics(4).png" class="img-fluid" alt="smaple image">
+              </div>
+      
+            </div>
+            <div class="col-md-5 d-flex align-items-center">
+              <div>
+                
+                <h3 class="font-weight-bold mb-4">Share Your Passion With Reverie!</h3>
+      
+                  <p>Lorem ipsum dolor sit amet consectetur adip elit. Maiores deleniti explicabo voluptatem quisquam nulla asperiores aspernatur aperiam voluptate et consectetur minima delectus, fugiat eum soluta blanditiis adipisci, velit dolore magnam.</p>
+      
+                  <button type="button" class="btn btn-orange btn-rounded mx-0">Get Started</button>
+      
+              </div>
+            </div>
+          </div>
+      
+        </section>
+        <!--Section: Content-->
+      
+      
+      </div>
 
 {% endblock %}
