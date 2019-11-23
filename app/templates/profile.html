@@ -54,18 +54,14 @@
                         {% endif %}
 
                         <!-- Grid column -->
-                        <div class="col-lg-7">
+                        <div class="col-lg-7
+                        ">
 
                             <!-- Category -->
 
                             <a href="#!">
 
-                                <h6 class="font-weight-bold mb-3"><img style="max-width: 55px; margin-right: 10px;"
-                                        src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg"
-                                        class="img-fluid z-depth-1 rounded-circle"
-                                        alt="Responsive image"><strong>{{ post.Author.FirstName }}
-                                        {{ post.Author.LastName }}</strong>,
-                                    {{ post.DatePosted.strftime('%a %d, %Y') }}</h6>
+                                <h6 class="font-weight-bold mb-3">{{ post.DatePosted.strftime('%a %d, %Y') }}</h6>
                             </a>
 
                             <!-- Post title -->
