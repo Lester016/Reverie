@@ -22,7 +22,7 @@
             <!-- Title -->
             <h4 class="card-title"><strong>{{ post.Title }}</strong></h4>
             <!-- Subtitle -->
-            <h6 class="font-weight-bold indigo-text py-2">Photography</h6>
+            <h6 class="font-weight-bold indigo-text py-2">{{ post.Author.FirstName }} {{ post.Author.LastName }} - {{ post.DatePosted.strftime('%a %d, %Y') }}</h6>
             <!-- Text -->
             <p class="card-text">{{ post.Content }}
             </p>

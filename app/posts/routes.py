@@ -39,6 +39,28 @@ def post(postID):
     return render_template('posts/post.html', title="Posts", post=post)
 
 
+@posts.route("/posts/<int:postID>/update", methods=['GET', 'POST'])
+@login_required
+def update_post(postID):
+    post = Post.query.get_or_404(postID)
+    if post.Author != current_user:
+        abort(403)
+    form = NewPost()
+    if form.validate_on_submit():
+        if form.postImage.data:
+            postImage = save_postImage(form.postImage.data)
+            post.ImageFile = postImage
+        post.Title = form.title.data
+        post.Content = form.content.data
+        db.session.commit()
+        return redirect(url_for('posts.post', postID=post.id))
+    elif request.method == 'GET':
+        form.title.data = post.Title
+        form.content.data = post.Content
+        form.postImage.data = post.ImageFile
+    return render_template('posts/update-post.html', title="Update Post", form=form, post=post)
+
+
 @posts.route("/posts/<int:postID>/delete", methods=['POST'])
 @login_required
 def delete_post(postID):
