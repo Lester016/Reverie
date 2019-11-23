@@ -57,16 +57,26 @@
                         <div class="col-lg-7">
 
                             <!-- Category -->
-                            <a href="#!" class="green-text">
-                                <h6 class="font-weight-bold mb-3"><i class="fas fa-utensils pr-2"></i>Food</h6>
+
+                            <a href="#!">
+
+                                <h6 class="font-weight-bold mb-3"><img style="max-width: 55px; margin-right: 10px;"
+                                        src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg"
+                                        class="img-fluid z-depth-1 rounded-circle"
+                                        alt="Responsive image"><strong>{{ post.Author.FirstName }}
+                                        {{ post.Author.LastName }}</strong>,
+                                    {{ post.DatePosted.strftime('%a %d, %Y') }}</h6>
                             </a>
+
                             <!-- Post title -->
                             <h3 class="font-weight-bold mb-3"><strong>{{ post.Title }}</strong></h3>
                             <!-- Excerpt -->
-                            <p>{{ post.Content }}</p>
+                            {% if post.Content[:150] %}
+
+                            <p class="dark-grey-text">{{ post.Content[:150] + (post.Content[150:] and '...') }}</p>
                             <!-- Post data -->
-                            <p>by <a><strong>{{ post.Author.FirstName }} {{ post.Author.LastName }}</strong></a>,
-                                19/08/2018</p>
+                            {% endif %}
+
                             <!-- Read more button -->
                             <a class="btn btn-outline-primary waves-effect btn-sm">Edit</a>
                             <form action="{{ url_for('posts.delete_post', postID=post.id) }}"
