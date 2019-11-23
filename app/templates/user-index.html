@@ -131,8 +131,12 @@
                 </a>
 
                 <!-- Excerpt -->
-                <p class="dark-grey-text">{{ post.Content }}</p>
+                {% if post.Content[:200] %}
+
+                <p class="dark-grey-text">{{ post.Content[:200] + (post.Content[200:] and '...') }}</p>
                 <!-- Post data -->
+                {% endif %}
+
                 <p>by <a class="font-weight-bold">{{ post.Author.FirstName }} {{ post.Author.LastName }}</a>,
                     {{ post.DatePosted.strftime('%a %d, %Y') }}</p>
                 <!-- Read more button -->

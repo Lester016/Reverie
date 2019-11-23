@@ -30,6 +30,7 @@ def home():
         return redirect(url_for('main.home'))
     if current_user.is_authenticated:
         posts = Post.query.order_by(Post.DatePosted.desc())
+        
 
         return render_template('user-index.html', posts=posts)
 
