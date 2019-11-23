@@ -69,7 +69,9 @@
                             </a>
 
                             <!-- Post title -->
-                            <h3 class="font-weight-bold mb-3"><strong>{{ post.Title }}</strong></h3>
+                            <a href="{{ url_for('posts.post', postID=post.id) }}" class="black-text">
+                                <h3 class="font-weight-bold mb-3"><strong>{{ post.Title }}</strong></h3>
+                            </a>
                             <!-- Excerpt -->
                             {% if post.Content[:150] %}
 
