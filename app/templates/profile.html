@@ -40,10 +40,11 @@
                         <div class="col-lg-5">
 
                             <!-- Featured image -->
-                            <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">   
+                            <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
                                 <img class="img-fluid" src="{{ url_for('static', filename='post_images/' +
                                     post.ImageFile) }}" alt="Post Image">
-                                <a>
+                                <a href="{{ url_for('posts.post', postID=post.id) }}">
+
                                     <div class="mask rgba-white-slight"></div>
                                 </a>
                             </div>
@@ -64,10 +65,14 @@
                             <!-- Excerpt -->
                             <p>{{ post.Content }}</p>
                             <!-- Post data -->
-                            <p>by <a><strong>{{ post.Author.FirstName }} {{ post.Author.LastName }}</strong></a>, 19/08/2018</p>
+                            <p>by <a><strong>{{ post.Author.FirstName }} {{ post.Author.LastName }}</strong></a>,
+                                19/08/2018</p>
                             <!-- Read more button -->
                             <a class="btn btn-outline-primary waves-effect btn-sm">Edit</a>
-                            <a class="btn btn-outline-danger waves-effect btn-sm">Delete</a>
+                            <form action="{{ url_for('posts.delete_post', postID=post.id) }}"
+                                style="display: inline-block;" method="POST">
+                                <button type="submit" class="btn btn-outline-danger waves-effect btn-sm">Delete</button>
+                            </form>
                         </div>
                         <!-- Grid column -->
 

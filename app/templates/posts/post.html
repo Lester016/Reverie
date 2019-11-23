@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content%}
+<main>
+    <br>
+    <!-- Card -->
+    <div class="card card-cascade wider reverse">
+
+        {% if post.ImageFile %}
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+            <img class="card-img-top" src="{{ url_for('static', filename='post_images/' +
+            post.ImageFile) }}" alt="Card image cap">
+            <a href="#!">
+                <div class="mask rgba-white-slight"></div>
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- Card content -->
+        <div class="card-body card-body-cascade text-center">
+
+            <!-- Title -->
+            <h4 class="card-title"><strong>{{ post.Title }}</strong></h4>
+            <!-- Subtitle -->
+            <h6 class="font-weight-bold indigo-text py-2">Photography</h6>
+            <!-- Text -->
+            <p class="card-text">{{ post.Content }}
+            </p>
+
+            <!-- Linkedin -->
+            <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
+            <!-- Twitter -->
+            <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
+            <!-- Dribbble -->
+            <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
+
+        </div>
+
+    </div>
+    <!-- Card -->
+    <br>
+    <br>
+</main>
+{% endblock %}

@@ -31,3 +31,22 @@ def create_post():
         return redirect(url_for('users.profile'))
 
     return render_template('posts/create-post.html', form=form, title="Make a story")
+
+
+@posts.route("/posts/<int:postID>", methods=['GET', 'POST'])
+def post(postID):
+    post = Post.query.get_or_404(postID)
+    return render_template('posts/post.html', title="Posts", post=post)
+
+
+@posts.route("/posts/<int:postID>/delete", methods=['POST'])
+@login_required
+def delete_post(postID):
+    post = Post.query.get_or_404(postID)
+    if post.Author != current_user:
+        abort(403)
+
+    db.session.delete(post)
+    db.session.commit()
+    flash("Post has been deleted", category='danger')
+    return redirect(url_for('users.profile'))
