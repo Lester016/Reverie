@@ -4,16 +4,18 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>{{ current_user.FirstName }} {{ current_user.LastName }}</h1>
-                <p>{{ current_user.Email }}</p>
+                <h1>{{ user.FirstName }} {{ user.LastName }}</h1>
+                <p>{{ user.Email }}</p>
             </div>
             <div class="col-sm">
-                <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
-                    Profile</a>
+                <a href="#" class="btn btn-primary btn-rounded btn-sm">Add
+                    Friend</a>
+                <a href="#" class="btn btn-primary btn-rounded btn-sm">Generate User
+                    Data</a>
             </div>
             <div class="col-sm">
                 <div class="avatar mx-auto white" style="max-width: 150px;">
-                    <img src="{{ url_for('static', filename='profile_pictures/' + current_user.ProfilePicture) }}"
+                    <img src="{{ url_for('static', filename='profile_pictures/' + user.ProfilePicture) }}"
                         alt="profile-picture" class="rounded-circle img-fluid">
                 </div>
             </div>
@@ -24,15 +26,11 @@
                     aria-selected="true">Posts</a>
             </li>
         </ul>
-        <div class="float-right">
-            <a href="{{ url_for('posts.create_post') }}" class="btn btn-outline-primary waves-effect"><i
-                    class="fas fa-magic mr-1"></i>Make a story</a>
-        </div>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <!-- Section: Blog v.1 -->
                 <section class="my-5">
-                    {% for post in posts %}
+                    {% for post in posts.items %}
                     <!-- Grid row -->
                     <div class="row">
                         {% if post.ImageFile %}
@@ -76,7 +74,8 @@
                             {% endif %}
 
                             <!-- Read more button -->
-                            <a class="btn btn-outline-primary waves-effect btn-sm" href="{{ url_for('posts.update_post', postID=post.id) }}">Edit</a>
+                            <a class="btn btn-outline-primary waves-effect btn-sm"
+                                href="{{ url_for('posts.update_post', postID=post.id) }}">Edit</a>
                             <form action="{{ url_for('posts.delete_post', postID=post.id) }}"
                                 style="display: inline-block;" method="POST">
                                 <button type="submit" class="btn btn-outline-danger waves-effect btn-sm">Delete</button>

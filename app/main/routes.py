@@ -30,18 +30,18 @@ def home():
         return redirect(url_for('main.home'))
     if current_user.is_authenticated:
         posts = Post.query.order_by(Post.DatePosted.desc())
-        
 
         return render_template('user-index.html', posts=posts)
 
     posts = Post.query.order_by(Post.DatePosted.desc())
     return render_template('index.html', form=form, posts=posts)
 
+
 @main.route("/profile/<string:email>")
-def channel_post(email):
+def user_profile(email):
     page = request.args.get('page', 1, type=int)
-    user = User.query.filter_by(email=email).first_or_404()
-    posts = Post.query.filter_by(author=user)\
-        .order_by(Post.datePosted.desc())\
+    user = User.query.filter_by(Email=email).first_or_404()
+    posts = Post.query.filter_by(Author=user)\
+        .order_by(Post.DatePosted.desc())\
         .paginate(page=page, per_page=5)
-    return render_template('user-channel.html', posts=posts, user=user)
+    return render_template('user-profile.html', posts=posts, user=user)
