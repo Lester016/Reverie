@@ -14,6 +14,8 @@ class RegistrationForm(FlaskForm):
                            DataRequired(), Length(max=16)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
+    confirmPassword = PasswordField('Confirm Password', validators=[
+                                    DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign up')
 
     # Function to make a custom error validation message

@@ -68,6 +68,14 @@
                             {% endfor %}
                         </div>
 
+                        <div class="md-form">
+                            {{ form.confirmPassword(class='form-control') }}
+                            {{ form.confirmPassword.label }}
+                            {% for error in form.confirmPassword.errors %}
+                            <span style="color: #f44336">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
                         <div class="text-center mb-3">
                             <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Sign
                                 up</button>
