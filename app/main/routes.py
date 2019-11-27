@@ -36,3 +36,12 @@ def home():
 
     posts = Post.query.order_by(Post.DatePosted.desc())
     return render_template('index.html', form=form, posts=posts)
+
+@main.route("/profile/<string:email>")
+def channel_post(email):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(email=email).first_or_404()
+    posts = Post.query.filter_by(author=user)\
+        .order_by(Post.datePosted.desc())\
+        .paginate(page=page, per_page=5)
+    return render_template('user-channel.html', posts=posts, user=user)
