@@ -8,10 +8,15 @@
                 <p>{{ user.Email }}</p>
             </div>
             <div class="col-sm">
+                {% if current_user.Email != user.Email %}
                 <a href="#" class="btn btn-primary btn-rounded btn-sm">Add
                     Friend</a>
                 <a href="#" class="btn btn-primary btn-rounded btn-sm">Generate User
                     Data</a>
+                {% else %}
+                <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
+                    Profile</a>
+                {% endif %}
             </div>
             <div class="col-sm">
                 <div class="avatar mx-auto white" style="max-width: 150px;">
@@ -26,6 +31,12 @@
                     aria-selected="true">Posts</a>
             </li>
         </ul>
+        {% if current_user.Email == user.Email %}
+        <div class="float-right">
+            <a href="{{ url_for('posts.create_post') }}" class="btn btn-outline-primary waves-effect"><i
+                    class="fas fa-magic mr-1"></i>Make a story</a>
+        </div>
+        {% endif %}
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <!-- Section: Blog v.1 -->
