@@ -35,15 +35,15 @@
             {% endif %}
             <!-- Grid column -->
             <div class="col-lg-7 col-xl-8">
-                    <a href="{{ url_for('main.user_profile', email=post.Author.Email) }}" >
+                <a href="{{ url_for('main.user_profile', email=post.Author.Email) }}">
 
-                            <h6 class="font-weight-bold mb-3"><img style="max-width: 55px; margin-right: 10px;"
-                                    src="{{ url_for('static', filename='profile_pictures/' + post.Author.ProfilePicture) }}"
-                                    class="img-fluid z-depth-1 rounded-circle"
-                                    alt="Responsive image"><strong>{{ post.Author.FirstName }}
-                                    {{ post.Author.LastName }}</strong>,
-                                {{ post.DatePosted.strftime('%a %d, %Y') }}</h6>
-                        </a>
+                    <h6 class="font-weight-bold mb-3"><img style="max-width: 55px; margin-right: 10px;"
+                            src="{{ url_for('static', filename='profile_pictures/' + post.Author.ProfilePicture) }}"
+                            class="img-fluid z-depth-1 rounded-circle"
+                            alt="Responsive image"><strong>{{ post.Author.FirstName }}
+                            {{ post.Author.LastName }}</strong>,
+                        {{ post.DatePosted.strftime('%a %d, %Y') }}</h6>
+                </a>
                 <!-- Post title -->
                 <a href="{{ url_for('posts.post', postID=post.id) }}" style="color: black;">
                     <h3 class="font-weight-bold mb-3"><strong>{{ post.Title }}</strong></h3>
