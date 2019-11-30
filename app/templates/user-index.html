@@ -41,7 +41,7 @@
                             src="{{ url_for('static', filename='profile_pictures/' + post.Author.ProfilePicture) }}"
                             class="img-fluid z-depth-1 rounded-circle"
                             alt="Responsive image"><strong>{{ post.Author.FirstName }}
-                            {{ post.Author.LastName }}</strong>,
+                            {{ post.Author.LastName }}</strong> | 
                         {{ post.DatePosted.strftime('%a %d, %Y') }}</h6>
                 </a>
                 <!-- Post title -->
