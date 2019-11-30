@@ -45,3 +45,9 @@ def user_profile(email):
         .order_by(Post.DatePosted.desc())\
         .paginate(page=page, per_page=5)
     return render_template('user-profile.html', posts=posts, user=user, active=('profile' if user.Email == current_user.Email else ''))
+
+
+@main.route("/search")
+def search(inp):
+    user = User.query.all()
+    return render_template('search-list', user=user);
