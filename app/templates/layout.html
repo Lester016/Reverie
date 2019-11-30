@@ -43,11 +43,28 @@
 
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link waves-effect waves-light">1
+          <a class="nav-link waves-effect waves-light">
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-effect waves-light">
+            Profile
+          </a>
+        </li>
+        <li class="nav-item" style="margin-left: 10px;">
+          <form class="form-inline ml-auto" style="margin-top: 7px;">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
+          </form>
+        </li>
+        <li class="nav-item" style="margin-top: 3px;">
+          <a class="nav-link waves-effect waves-light">
+            1
             <i class="fas fa-envelope"></i>
           </a>
         </li>
-        <li class="nav-item avatar dropdown">
+        <li class="nav-item avatar dropdown" style="margin-top: 7px;">
           <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             <img src="{{ url_for('static', filename='profile_pictures/' + current_user.ProfilePicture) }}"
@@ -83,8 +100,8 @@
 
   <div style="margin-top: 70px;">
 
-  <!-- This is where the inherited html outputted -->
-  {% block content %}{% endblock %}
+    <!-- This is where the inherited html outputted -->
+    {% block content %}{% endblock %}
   </div>
 
 
