@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container" style="margin-top: 100px;">
+    <form class="row" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <input type="text" name="" id="">
+    </form>
+    {% for user in users %}
+        <p>{{ user.Email }}</p>
+    {% endfor %}
+</div>
+{% endblock %}

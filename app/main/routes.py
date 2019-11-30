@@ -3,7 +3,7 @@ from flask import (render_template, request,
 from flask_login import (login_user, current_user, logout_user, login_required)
 from app import db, bcrypt
 from app.models import User, Post
-from app.main.forms import RegistrationForm
+from app.main.forms import RegistrationForm, SearchForm
 from datetime import timedelta
 
 main = Blueprint('main', __name__)
@@ -48,6 +48,11 @@ def user_profile(email):
 
 
 @main.route("/search")
-def search(inp):
-    user = User.query.all()
-    return render_template('search-list', user=user);
+def search():
+    form = SearchForm()
+    if form.validate_on_submit():
+        inp = form.inp.data
+        db.session.add(user)
+        db.session.commit()
+    users = User.query.all()
+    return render_template('search-list.html', users=users, form=form);

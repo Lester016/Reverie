@@ -28,3 +28,8 @@ class RegistrationForm(FlaskForm):
 
         if user:
             raise ValidationError("Email is already taken.")
+
+
+class SearchForm(FlaskForm):
+    inp = StringField('Search Email...', validators=[
+        DataRequired(), Email()] )
