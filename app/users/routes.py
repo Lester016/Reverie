@@ -64,7 +64,7 @@ def logout():
 def profile():
     posts = Post.query.filter(Post.UserID.like(current_user.id)).order_by(
         (Post.DatePosted).desc()).all()
-    return render_template('profile.html', title='Profile', posts=posts)
+    return render_template('profile.html', title='Profile', posts=posts, active='profile')
 
 
 @users.route("/profile/update", methods=['GET', 'POST'])
@@ -87,7 +87,7 @@ def profile_update():
         form.email.data = current_user.Email
         form.profilePicture.data = current_user.ProfilePicture
 
-    return render_template('profile-update.html', form=form, title='Profile Update')
+    return render_template('profile-update.html', form=form, title='Profile Update', active='profile')
 
 
 # Send a reset token to user email.

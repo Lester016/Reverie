@@ -316,3 +316,6 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+.active {
+  font-weight: 900;
+}

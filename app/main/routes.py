@@ -31,7 +31,7 @@ def home():
     if current_user.is_authenticated:
         posts = Post.query.order_by(Post.DatePosted.desc())
 
-        return render_template('user-index.html', posts=posts)
+        return render_template('user-index.html', posts=posts, active='home')
 
     posts = Post.query.order_by(Post.DatePosted.desc())
     return render_template('index.html', form=form, posts=posts)
@@ -44,4 +44,4 @@ def user_profile(email):
     posts = Post.query.filter_by(Author=user)\
         .order_by(Post.DatePosted.desc())\
         .paginate(page=page, per_page=5)
-    return render_template('user-profile.html', posts=posts, user=user)
+    return render_template('user-profile.html', posts=posts, user=user, active=('profile' if user.Email == current_user.Email else ''))
