@@ -43,13 +43,13 @@
 
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link waves-effect waves-light {% if active == 'home' %} active {% endif %}"
+          <a class="nav-link waves-effect waves-light {% if active == 'home' %} activenav {% endif %}"
           href="{{ url_for('main.home') }}"">
             Home
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link waves-effect waves-light {% if active == 'profile' %} active {% endif %}"
+          <a class="nav-link waves-effect waves-light {% if active == 'profile' %} activenav {% endif %}"
           href="{{ url_for('users.profile') }}"">
             Profile
           </a>
