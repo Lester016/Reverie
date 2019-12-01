@@ -84,12 +84,14 @@
                         {% endif %}
 
                         <!-- Read more button -->
+                        {% if current_user.Email == post.Author.Email %}
                         <a class="btn btn-outline-primary waves-effect btn-sm"
                             href="{{ url_for('posts.update_post', postID=post.id) }}">Edit</a>
                         <form action="{{ url_for('posts.delete_post', postID=post.id) }}" style="display: inline-block;"
                             method="POST">
                             <button type="submit" class="btn btn-outline-danger waves-effect btn-sm">Delete</button>
                         </form>
+                        {% endif %}
                     </div>
                     <!-- Grid column -->
 

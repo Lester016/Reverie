@@ -48,7 +48,7 @@ def update_post(postID):
     form = NewPost()
     if form.validate_on_submit():
         if form.postImage.data:
-            postImage = save_postImage(form.postImage.data)
+            postImage = save_post_image(form.postImage.data)
             post.ImageFile = postImage
         post.Title = form.title.data
         post.Content = form.content.data
