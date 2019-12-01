@@ -86,7 +86,7 @@
         <li class="nav-item">
           <a class="nav-link btn peach-gradient" href="{{ url_for('users.register') }}"
             style="padding: 5px 10px 5px 10px">
-            <span class="clearfix d-none d-sm-inline-block ">Sign up</span></a>
+            <span class="clearfix d-none d-sm-inline-block">Sign up</span></a>
         </li>
         {% endif %}
       </ul>
@@ -99,7 +99,15 @@
 
 
   <div style="margin-top: 70px;">
-
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}" role="alert">
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <!-- This is where the inherited html outputted -->
     {% block content %}{% endblock %}
   </div>

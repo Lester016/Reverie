@@ -7,7 +7,6 @@ from app.users.forms import (RegistrationForm, LoginForm, ProfileUpdate,
                              RequestResetForm, ResetPasswordForm)
 from app.users.utils import save_picture, send_reset_email
 from datetime import timedelta
-import pdfkit
 
 
 # The first argument is use to navigate different routes using that Blueprint
@@ -67,16 +66,8 @@ def logout():
 def profile():
     posts = Post.query.filter(Post.UserID.like(current_user.id)).order_by(
         (Post.DatePosted).desc()).all()
-    
-    rendered = render_template('profile.html', title='Profile', posts=posts, active='profile')
-    pdf = pdfkit.from_string(rendered, False)
 
-    response = make_response(pdf)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
-
-    return response
-
+    return render_template('profile.html', title='Profile', posts=posts, active='profile')
 
 
 @users.route("/profile/update", methods=['GET', 'POST'])
@@ -91,7 +82,7 @@ def profile_update():
         current_user.LastName = form.lastName.data.capitalize()
         current_user.Email = form.email.data
         db.session.commit()
-        flash('Successfully updated!')
+        flash('Successfully updated!', 'success')
         return redirect(url_for('users.profile'))
     elif request.method == 'GET':
         form.firstName.data = current_user.FirstName

@@ -32,7 +32,7 @@ def home():
     if current_user.is_authenticated:
         posts = Post.query.order_by(Post.DatePosted.desc())
         users = User.query.filter(User.id != current_user.id).order_by(
-        func.random()).limit(3).all()
+            func.random()).limit(3).all()
 
         return render_template('user-index.html', posts=posts, users=users, active='home')
 
@@ -47,7 +47,8 @@ def user_profile(email):
     posts = Post.query.filter_by(Author=user)\
         .order_by(Post.DatePosted.desc())\
         .paginate(page=page, per_page=5)
-    return render_template('user-profile.html', posts=posts, user=user, active=('profile' if user.Email == current_user.Email else ''))
+    return render_template('user-profile.html', posts=posts, user=user,
+                           active=('profile' if user.Email == current_user.Email else ''))
 
 
 @main.route("/search", methods=['GET', 'POST'])
@@ -57,6 +58,6 @@ def search():
         inp = form.inp.data.lower()
         results = User.query.filter(User.Email.contains(inp))
 
-        return render_template('search-list.html', results=results, form=form);
+        return render_template('search-list.html', results=results, form=form)
 
-    return render_template('search-list.html', form=form);
+    return render_template('search-list.html', form=form)

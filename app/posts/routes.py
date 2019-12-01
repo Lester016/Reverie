@@ -27,7 +27,7 @@ def create_post():
         )
         db.session.add(post)
         db.session.commit()
-        flash("Succesfully Posted!")
+        flash("Succesfully Posted!", category='success')
         return redirect(url_for('users.profile'))
 
     return render_template('posts/create-post.html', form=form, title="Make a story")
