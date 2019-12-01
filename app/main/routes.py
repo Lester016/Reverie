@@ -47,12 +47,13 @@ def user_profile(email):
     return render_template('user-profile.html', posts=posts, user=user, active=('profile' if user.Email == current_user.Email else ''))
 
 
-@main.route("/search")
+@main.route("/search", methods=['GET', 'POST'])
 def search():
     form = SearchForm()
     if form.validate_on_submit():
-        inp = form.inp.data
-        db.session.add(user)
-        db.session.commit()
-    users = User.query.all()
-    return render_template('search-list.html', users=users, form=form);
+        inp = form.inp.data.lower()
+        results = User.query.filter(User.Email.contains(inp))
+
+        return render_template('search-list.html', results=results, form=form);
+
+    return render_template('search-list.html', form=form);

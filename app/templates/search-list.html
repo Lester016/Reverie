@@ -1,12 +1,70 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container" style="margin-top: 100px;">
-    <form class="row" method="POST" enctype="multipart/form-data">
+    <!--Form without header-->
+    <form class="card" method="POST">
         {{ form.hidden_tag() }}
-        <input type="text" name="" id="">
+        <div class="card-body mx-4">
+
+            <!--Header-->
+            <div class="text-center">
+                <h3 class="dark-grey-text mb-5">
+                    <strong>Search User</strong>
+                </h3>
+            </div>
+
+            <div class="md-form">
+                {{ form.inp(class='form-control') }}
+                {{ form.inp.label }}
+                {% for error in form.inp.errors %}
+                <span style="color: #f44336">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="text-center mb-3">
+                <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Search</button>
+            </div>
+
+
+        </div>
+
+
     </form>
-    {% for user in users %}
-        <p>{{ user.Email }}</p>
-    {% endfor %}
+    <br>
+    <!--/Form without header-->
+    <div class="row">
+
+        {% for result in results %}
+        <div class="col-4">
+
+            <div class="card testimonial-card">
+
+                <!-- Background color -->
+                <div class="card-up indigo lighten-1"></div>
+
+                <!-- Avatar -->
+                <div class="avatar mx-auto white">
+                    <img src="{{ url_for('static', filename='profile_pictures/' + result.ProfilePicture) }}"
+                        class="rounded-circle" alt="woman avatar">
+                </div>
+
+                <!-- Content -->
+                <div class="card-body">
+                    <!-- Name -->
+                    <h4 class="card-title">{{ result.FirstName }} {{ result.LastName }}</h4>
+                    <strong>{{ result.Email }}</strong>
+                    <hr>
+                    <!-- Quotation -->
+                    <p><i class="fas fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos,
+                        adipisci</p>
+                </div>
+
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
 </div>
 {% endblock %}

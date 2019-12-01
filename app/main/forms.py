@@ -32,4 +32,5 @@ class RegistrationForm(FlaskForm):
 
 class SearchForm(FlaskForm):
     inp = StringField('Search Email...', validators=[
-        DataRequired(), Email()] )
+        DataRequired()] )
+    submit = SubmitField('Search')
