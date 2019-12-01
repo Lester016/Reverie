@@ -1,9 +1,10 @@
 from flask import (render_template, url_for, flash,
-                   redirect, request, Blueprint)
+                   redirect, request, Blueprint, make_response)
 from flask_login import (login_user, current_user, logout_user, login_required)
 from app import db, bcrypt
 from app.models import User, Post
-from app.users.forms import RegistrationForm, LoginForm, ProfileUpdate, RequestResetForm, ResetPasswordForm
+from app.users.forms import (RegistrationForm, LoginForm, ProfileUpdate,
+                             RequestResetForm, ResetPasswordForm)
 from app.users.utils import save_picture, send_reset_email
 from datetime import timedelta
 
@@ -98,7 +99,8 @@ def reset_request():
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(Email=form.email.data).first()
-        send_reset_email(user) # Call the function that will generate the email and token for the reset password.
+        # Call the function that will generate the email and token for the reset password.
+        send_reset_email(user)
         flash("An email has been sent you can reset your email now.", 'success')
         return redirect(url_for('users.login'))
     return render_template('reset-request.html', title='Reset Password', form=form)
