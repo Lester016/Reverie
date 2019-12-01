@@ -37,7 +37,7 @@
                 {% endif %}
                 <!-- Grid column -->
                 <div class="col-lg-7 col-xl-8">
-                    
+
                     <!-- Post title -->
                     <a href="{{ url_for('posts.post', postID=post.id) }}" style="color: black;">
                         <h5 class="font-weight-bold mb-3"><strong>{{ post.Title }}</strong></h5>
@@ -53,14 +53,13 @@
                     <!-- Read more button -->
 
                     <a href="{{ url_for('main.user_profile', email=post.Author.Email) }}">
-
-                            <h6 class="font-weight-bold mb-3"><img style="max-width: 30px; margin-right: 10px;"
-                                    src="{{ url_for('static', filename='profile_pictures/' + post.Author.ProfilePicture) }}"
-                                    class="img-fluid z-depth-1 rounded-circle"
-                                    alt="Responsive image"><strong>{{ post.Author.FirstName }}
-                                    {{ post.Author.LastName }}</strong> |
-                                {{ post.DatePosted.strftime('%m/%d/%Y') }}</h6>
-                        </a>
+                        <h6 class="font-weight-bold mb-3"><img style="max-width: 30px; margin-right: 10px;"
+                                src="{{ url_for('static', filename='profile_pictures/' + post.Author.ProfilePicture) }}"
+                                class="img-fluid z-depth-1 rounded-circle"
+                                alt="Responsive image"><strong>{{ post.Author.FirstName }}
+                                {{ post.Author.LastName }}</strong> |
+                            {{ post.DatePosted.strftime('%m/%d/%Y') }}</h6>
+                    </a>
                 </div>
                 <!-- Grid column -->
 
@@ -75,6 +74,22 @@
 
         <section class="my-5 col-xl-3">
             <h4 style="font-weight: bolder;">People You may know</h4>
+            {% for user in users %}
+            <div class="card-deck">
+
+                <!-- Card -->
+                <div class="card mb-4" style="padding: 10px;">
+                    <a href="{{ url_for('main.user_profile', email=user.Email) }}">
+                        <h6 class="font-weight-bold mb-3"><img style="max-width: 50px; margin-right: 10px;"
+                                src="{{ url_for('static', filename='profile_pictures/' + user.ProfilePicture) }}"
+                                class="img-fluid z-depth-1 rounded-circle"
+                                alt="Responsive image"><strong>{{ user.FirstName }}
+                                {{ user.LastName }}</strong>
+                        </h6>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
         </section>
     </div>
 </div>

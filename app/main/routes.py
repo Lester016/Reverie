@@ -5,6 +5,7 @@ from app import db, bcrypt
 from app.models import User, Post
 from app.main.forms import RegistrationForm, SearchForm
 from datetime import timedelta
+from sqlalchemy.sql.expression import func
 
 main = Blueprint('main', __name__)
 
@@ -30,8 +31,10 @@ def home():
         return redirect(url_for('main.home'))
     if current_user.is_authenticated:
         posts = Post.query.order_by(Post.DatePosted.desc())
+        users = User.query.filter(User.id != current_user.id).order_by(
+        func.random()).limit(3).all()
 
-        return render_template('user-index.html', posts=posts, active='home')
+        return render_template('user-index.html', posts=posts, users=users, active='home')
 
     posts = Post.query.order_by(Post.DatePosted.desc())
     return render_template('index.html', form=form, posts=posts)
