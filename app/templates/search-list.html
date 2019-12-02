@@ -43,6 +43,7 @@
                 <div class="card-up indigo lighten-1"></div>
 
                 <!-- Avatar -->
+
                 <div class="avatar mx-auto white">
                     <img src="{{ url_for('static', filename='profile_pictures/' + result.ProfilePicture) }}"
                         class="rounded-circle" alt="woman avatar">
@@ -50,9 +51,11 @@
 
                 <!-- Content -->
                 <div class="card-body">
-                    <!-- Name -->
-                    <h4 class="card-title">{{ result.FirstName }} {{ result.LastName }}</h4>
-                    <strong>{{ result.Email }}</strong>
+                    <a href="{{ url_for('main.user_profile', email=result.Email) }}">
+                        <!-- Name -->
+                        <h4 class="card-title">{{ result.FirstName }} {{ result.LastName }}</h4>
+                        <strong>{{ result.Email }}</strong>
+                    </a>
                     <hr>
                     <!-- Quotation -->
                     <p><i class="fas fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos,
