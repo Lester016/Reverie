@@ -1,11 +1,13 @@
-from flask import (render_template, request,
-                   Blueprint, redirect, url_for, flash)
+from flask import (render_template, request, Blueprint,
+                   redirect, url_for, flash, make_response)
 from flask_login import (login_user, current_user, logout_user, login_required)
 from app import db, bcrypt
 from app.models import User, Post
 from app.main.forms import RegistrationForm, SearchForm
 from datetime import timedelta
 from sqlalchemy.sql.expression import func
+import pdfkit
+
 
 main = Blueprint('main', __name__)
 
@@ -61,3 +63,21 @@ def search():
         return render_template('search-list.html', results=results, form=form)
 
     return render_template('search-list.html', form=form)
+
+
+@main.route("/print/<string:email>")
+def pdf_template(email):
+
+    user = User.query.filter_by(Email=email).first()
+
+    
+    
+    rendered = render_template('pdf-template.html',
+                               firstname=user.FirstName, lastname=user.LastName, email=user.Email, posts=user.Posts)
+    pdf = pdfkit.from_string(rendered, False)
+
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
+
+    return response

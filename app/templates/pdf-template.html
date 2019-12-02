@@ -1,0 +1,14 @@
+<body style="background-color: beige;">
+    <h1 style="text-decoration: underline; text-align: center;">User's Info</h1>
+    <br><br>
+    <h2>{{ firstname }} {{ lastname }}</h2>
+    <h4>Followed: 61</h4>
+    <h4>Followers: 32</h4>
+    <h5>{{ email }}</h5>
+    <h2>Posts: </h2>
+    {% for post in posts %}
+    <p>{{ post.Title }}</p>
+    <p>{{ post.DatePosted.strftime('%m/%d/%Y') }}</p>
+    <br>
+    {% endfor %}
+</body>

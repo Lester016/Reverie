@@ -10,7 +10,7 @@
             {% if current_user.Email != user.Email %}
             <a href="#" class="btn btn-primary btn-rounded btn-sm">Add
                 Friend</a>
-            <a href="#" class="btn btn-primary btn-rounded btn-sm">Generate User
+            <a href="{{ url_for('main.pdf_template', email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">Generate User
                 Data</a>
             {% else %}
             <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
