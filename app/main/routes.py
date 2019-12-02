@@ -65,7 +65,7 @@ def search():
     return render_template('search-list.html', form=form)
 
 
-@main.route("/print/<string:email>")
+@main.route("/profile/print-user-data/<string:email>")
 def pdf_template(email):
 
     user = User.query.filter_by(Email=email).first()
