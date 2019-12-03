@@ -70,8 +70,6 @@ def pdf_template(email):
 
     user = User.query.filter_by(Email=email).first()
 
-    
-    
     rendered = render_template('pdf-template.html',
                                firstname=user.FirstName, lastname=user.LastName, email=user.Email, posts=user.Posts)
     pdf = pdfkit.from_string(rendered, False)
