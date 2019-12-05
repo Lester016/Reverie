@@ -11,6 +11,14 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+Followers = db.Table('followers',
+                     db.Column('follower_id', db.Integer,
+                               db.ForeignKey('user.id')),
+                     db.Column('followed_id', db.Integer,
+                               db.ForeignKey('user.id'))
+                     )
+
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     FirstName = db.Column(db.String(20), nullable=False)
@@ -20,24 +28,46 @@ class User(db.Model, UserMixin):
     ProfilePicture = db.Column(db.String(20), nullable=False,
                                default='default.png')
     Posts = db.relationship('Post', backref='Author', lazy=True)
-    # Function to print the value of User model
+    Followed = db.relationship(
+        'User', secondary=Followers,
+        primaryjoin=(Followers.c.follower_id == id),
+        secondaryjoin=(Followers.c.followed_id == id),
+        backref=db.backref('Followers', lazy='dynamic'), lazy='dynamic')
 
     # Generate a reset token in the s.dumps with SECRET_KEY as secret_key argument in Serializer.
+
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.id}).decode('utf-8') # Store the token into SECRET_KEY.
+        # Store the token into SECRET_KEY.
+        return s.dumps({'user_id': self.id}).decode('utf-8')
 
     @staticmethod
     def verify_reset_token(token):
-        s = Serializer(current_app.config['SECRET_KEY']) # Get the token stored in SECRET_KEY.
+        # Get the token stored in SECRET_KEY.
+        s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            user_id = s.loads(token)['user_id'] # Load or Decrypt the token stored in SECRET_KEY.
+            # Load or Decrypt the token stored in SECRET_KEY.
+            user_id = s.loads(token)['user_id']
         except:
             return None
         return User.query.get(user_id)
 
+    # Function to print the value of User model
+
     def __repr__(self):
         return f"User('{self.FirstName}', '{self.LastName}', '{self.Email}', '{self.ProfilePicture}')"
+
+    def follow(self, user):
+        if not self.is_following(user):
+            self.Followed.append(user)
+
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.Followed.remove(user)
+
+    def is_following(self, user):
+        return self.Followed.filter(
+            Followers.c.followed_id == user.id).count() > 0
 
 
 class Post(db.Model):
