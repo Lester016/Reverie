@@ -5,15 +5,11 @@
         <div class="col-sm">
             <h1>{{ user.FirstName }} {{ user.LastName }}</h1>
             <p>{{ user.Email }}</p>
-            <p>{{ _('%(count)d followers', count=user.Followers.count()) }}, {{ _('%(count)d following', count=user.Followed.count()) }}</p>
         </div>
         <div class="col-sm">
             {% if current_user.Email != user.Email %}
-                {% if not current_user.is_following(user) %}
-                        <p><a href="{{ url_for('users.follow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">Follow</a></p>
-                {% else %}
-                        <p><a href="{{ url_for('users.unfollow', Email=user.Email) }} " class="btn btn-primary btn-rounded btn-sm">Unfollow</a></p>
-            {% endif %}
+            <a href="#" class="btn btn-primary btn-rounded btn-sm">Add
+                Friend</a>
             <a href="{{ url_for('main.pdf_template', email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">Generate User
                 Data</a>
             {% else %}
