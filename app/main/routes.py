@@ -49,8 +49,14 @@ def user_profile(email):
     posts = Post.query.filter_by(Author=user)\
         .order_by(Post.DatePosted.desc())\
         .paginate(page=page, per_page=5)
+
+    followers = user.Followed.all()
+    following = user.Followers.all()
+
     return render_template('user-profile.html', posts=posts, user=user,
-                           active=('profile' if user.Email == current_user.Email else ''))
+                           active=('profile' if user.Email ==
+                                   current_user.Email else ''),
+                           followers=followers, following=following)
 
 
 @main.route("/search", methods=['GET', 'POST'])

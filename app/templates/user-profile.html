@@ -10,7 +10,8 @@
             {% if current_user.Email != user.Email %}
             <a href="#" class="btn btn-primary btn-rounded btn-sm">Add
                 Friend</a>
-            <a href="{{ url_for('main.pdf_template', email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">Generate User
+            <a href="{{ url_for('main.pdf_template', email=user.Email) }}"
+                class="btn btn-primary btn-rounded btn-sm">Generate User
                 Data</a>
             {% else %}
             <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
@@ -28,6 +29,14 @@
         <li class="nav-item">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
                 aria-selected="true">Posts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">Followers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                aria-selected="false">Following</a>
         </li>
     </ul>
     {% if current_user.Email == user.Email %}
@@ -102,6 +111,17 @@
                 {% endfor %}
             </section>
             <!-- Section: Blog v.1 -->
+        </div>
+
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            {% for follower in followers %}
+            <h1>{{ follower.FirstName }} {{ follower.LastName }}</h1>
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            {% for followed in following %}
+            <h1>{{ followed.FirstName }} {{ followed.LastName }}</h1>
+            {% endfor %}
         </div>
     </div>
 </div>
