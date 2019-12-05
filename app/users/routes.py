@@ -67,7 +67,9 @@ def profile():
     posts = Post.query.filter(Post.UserID.like(current_user.id)).order_by(
         (Post.DatePosted).desc()).all()
 
-    return render_template('profile.html', title='Profile', posts=posts, active='profile')
+    followers = current_user.Followed.all()
+
+    return render_template('profile.html', title='Profile', posts=posts, active='profile', followers=followers)
 
 
 @users.route("/profile/update", methods=['GET', 'POST'])
