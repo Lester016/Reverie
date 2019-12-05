@@ -67,8 +67,9 @@ def profile():
     posts = Post.query.filter(Post.UserID.like(current_user.id)).order_by(
         (Post.DatePosted).desc()).all()
 
-    followers = current_user.Followed.all()
-    following = current_user.Followers.all()
+    followers = current_user.Followers.all()
+    following = current_user.Followed.all()
+
     return render_template('profile.html', title='Profile', posts=posts,
                            active='profile', followers=followers, following=following)
 

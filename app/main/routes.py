@@ -32,13 +32,12 @@ def home():
         flash('Signed in!', 'success')
         return redirect(url_for('main.home'))
     if current_user.is_authenticated:
-        posts = Post.query.order_by(Post.DatePosted.desc())
+        posts = current_user.followed_posts().all()
         users = User.query.filter(User.id != current_user.id).order_by(
             func.random()).limit(3).all()
-
         return render_template('user-index.html', posts=posts, users=users, active='home')
 
-    posts = Post.query.order_by(Post.DatePosted.desc())
+    posts = current_user.followed_posts().all()
     return render_template('index.html', form=form, posts=posts)
 
 
@@ -50,8 +49,8 @@ def user_profile(email):
         .order_by(Post.DatePosted.desc())\
         .paginate(page=page, per_page=5)
 
-    followers = user.Followed.all()
-    following = user.Followers.all()
+    followers = user.Followers.all()
+    following = user.Followed.all()
 
     return render_template('user-profile.html', posts=posts, user=user,
                            active=('profile' if user.Email ==
