@@ -107,12 +107,14 @@
         </div>
         <div class="tab-pane fade" id="friendrequest" role="tabpanel" aria-labelledby="contact-tab">
             {% for follower in followers %}
+            {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
             <h1>
                 {{ follower.FirstName }} {{ follower.LastName }}
-                <a href="{{ url_for('users.follow', Email=follower.Email) }}" class="btn btn-primary btn-rounded btn-sm">
+                <a href="{{ url_for('users.accept', Email=follower.Email) }}" class="btn btn-primary btn-rounded btn-sm">
                     Accept Request
                 </a>
             </h1>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
