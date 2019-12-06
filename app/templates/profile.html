@@ -9,7 +9,12 @@
         <div class="col-sm">
             <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
                 Profile</a>
+            <a href="{{ url_for('main.pdf_template', email=current_user.Email) }}"
+                class="btn btn-primary btn-rounded btn-sm">Generate User
+                Data
+            </a>
         </div>
+
         <div class="col-sm">
             <div class="avatar mx-auto white" style="max-width: 150px;">
                 <img src="{{ url_for('static', filename='profile_pictures/' + current_user.ProfilePicture) }}"
@@ -27,8 +32,8 @@
                 aria-selected="false">Friends</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#friendrequest" role="tab" aria-controls="profile"
-                aria-selected="false">Friend Requests</a>
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#friendrequest" role="tab"
+                aria-controls="profile" aria-selected="false">Friend Requests</a>
         </li>
     </ul>
     <div class="float-right">
@@ -115,7 +120,8 @@
             {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
             <h1>
                 {{ follower.FirstName }} {{ follower.LastName }}
-                <a href="{{ url_for('users.accept', Email=follower.Email) }}" class="btn btn-primary btn-rounded btn-sm">
+                <a href="{{ url_for('users.accept', Email=follower.Email) }}"
+                    class="btn btn-primary btn-rounded btn-sm">
                     Accept Request
                 </a>
             </h1>
