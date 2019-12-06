@@ -43,7 +43,7 @@
                     {% else %}
                         {% if user.is_following(current_user) %}
                         <a href="{{ url_for('users.follow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
-                            Accept Requests
+                            Accept Request
                         </a>
                         {% else %}
                         <a href="{{ url_for('users.follow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
@@ -167,7 +167,12 @@
         </div>
         <div class="tab-pane fade" id="friendrequest" role="tabpanel" aria-labelledby="contact-tab">
             {% for follower in followers %}
-            <h1>{{ follower.FirstName }} {{ follower.LastName }}</h1>
+            <h1>
+                {{ follower.FirstName }} {{ follower.LastName }}
+                <a href="{{ url_for('users.follow', Email=follower.Email) }}" class="btn btn-primary btn-rounded btn-sm">
+                    Accept Request
+                </a>
+            </h1>
             {% endfor %}
         </div>
         <div class="tab-pane fade" id="mutuals" role="tabpanel" aria-labelledby="contact-tab">
