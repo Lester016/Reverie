@@ -8,21 +8,54 @@
         </div>
         <div class="col-sm">
             {% if current_user.Email != user.Email %}
-                {% if current_user.is_following(user) %}
-                <a href="{{ url_for('users.unfollow', Email=user.Email) }}"
-                    class="btn btn-primary btn-rounded btn-sm">Unfollow</a>
-                    {% if user.is_following(current_user) %}
-                    <a href="{{ url_for('main.pdf_template', email=user.Email) }}"
-                        class="btn btn-primary btn-rounded btn-sm">Generate User
-                        Data</a>
+                    {% if current_user.is_following(user) %}
+                        {% if user.is_following(current_user) %}
+                        <!-- Basic dropdown -->
+                        <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Friends</button>
+
+                        <div class="dropdown-menu">
+                            <a href="{{ url_for('users.unfollow', Email=user.Email) }}"
+                                class="btn btn-primary btn-rounded btn-sm">Unfriend</a>
+                        </div>
+                        <!-- Basic dropdown -->
+                        {% else %}
+                        <!-- Basic dropdown -->
+                        <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Pending</button>
+
+                        <div class="dropdown-menu">
+                            <a href="{{ url_for('users.unfollow', Email=user.Email) }}"
+                                class="btn btn-primary btn-rounded btn-sm">Cancel Request</a>
+                        </div>
+                        <!-- Basic dropdown -->
+                        {% endif %}
+
+
+                        {% if user.is_following(current_user) and current_user.is_following(user)  %}
+                        <a href="{{ url_for('main.pdf_template', email=user.Email) }}"
+                            class="btn btn-primary btn-rounded btn-sm">Generate User
+                            Data</a>
+                        {% else %}
+                        <i class="fas fa-check-double"></i>Following
+                        {% endif %}
+
+                    {% else %}
+                        {% if user.is_following(current_user) %}
+                        <a href="{{ url_for('users.follow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
+                            Accept Requests
+                        </a>
+                        {% else %}
+                        <a href="{{ url_for('users.follow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
+                            Add
+                            Friend
+                        </a>
+                        {% endif %}
                     {% endif %}
-                {% else %}
-                <a href="{{ url_for('users.follow', Email=user.Email) }}"
-                    class="btn btn-primary btn-rounded btn-sm">Follow</a>
-                {% endif %}
+
             {% else %}
-            <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
-                Profile</a>
+                <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
+                    Profile</a>
             {% endif %}
         </div>
         <div class="col-sm">
@@ -41,10 +74,17 @@
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#friends" role="tab" aria-controls="contact"
                 aria-selected="false">Friends</a>
         </li>
+        {% if current_user.id == user.id %}
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#friendrequest" role="tab" aria-controls="profile"
-                aria-selected="false">Friend Requests</a>
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#friendrequest" role="tab"
+                aria-controls="profile" aria-selected="false">Friend Requests</a>
         </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#mutuals" role="tab" aria-controls="profile"
+                aria-selected="false">Mutual Friends</a>
+        </li>
+        {% endif %}
     </ul>
     {% if current_user.Email == user.Email %}
     <div class="float-right">
@@ -121,15 +161,18 @@
         </div>
 
         <div class="tab-pane fade" id="friends" role="tabpanel" aria-labelledby="profile-tab">
-                {% for friend in friends %}
-                <h1>{{ friend.FirstName }} {{ friend.LastName }}</h1>
-                {% endfor %}
-            </div>
-            <div class="tab-pane fade" id="friendrequest" role="tabpanel" aria-labelledby="contact-tab">
-                {% for follower in followers %}
-                <h1>{{ follower.FirstName }} {{ follower.LastName }}</h1>
-                {% endfor %}
-            </div>
+            {% for friend in friends %}
+            <h1>{{ friend.FirstName }} {{ friend.LastName }}</h1>
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="friendrequest" role="tabpanel" aria-labelledby="contact-tab">
+            {% for follower in followers %}
+            <h1>{{ follower.FirstName }} {{ follower.LastName }}</h1>
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="mutuals" role="tabpanel" aria-labelledby="contact-tab">
+
+        </div>
     </div>
 </div>
 {% endblock %}
