@@ -8,7 +8,7 @@
         </div>
         <div class="col-sm">
             {% if current_user.Email != user.Email %}
-            <a href="#" class="btn btn-primary btn-rounded btn-sm">Add
+            <a href="{{ url_for('users.follow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">Add
                 Friend</a>
             <a href="{{ url_for('main.pdf_template', email=user.Email) }}"
                 class="btn btn-primary btn-rounded btn-sm">Generate User

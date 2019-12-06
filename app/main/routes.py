@@ -37,7 +37,7 @@ def home():
             func.random()).limit(3).all()
         return render_template('user-index.html', posts=posts, users=users, active='home')
 
-    posts = current_user.followed_posts().all()
+    posts = Post.query.order_by(Post.DatePosted.desc())
     return render_template('index.html', form=form, posts=posts)
 
 

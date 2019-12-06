@@ -138,14 +138,14 @@ def follow(Email):
     user = User.query.filter_by(Email=Email).first()
     if user is None:
         flash('User {} not found.'.format(Email))
-        return redirect(url_for(user_index))
+        return redirect(url_for('main.home'))
     if user == current_user:
         flash('You cannot follow yourself!')
-        return redirect(url_for('users.login', Email=user.Email))
+        return redirect(url_for('main.user_profile', email=user.Email))
     current_user.follow(user)
     db.session.commit()
     flash('You are following {}!'.format(Email))
-    return redirect(url_for('users.login', Email=user.Email))
+    return redirect(url_for('main.user_profile', email=user.Email))
 
 
 @users.route('/unfollow/<Email>')
