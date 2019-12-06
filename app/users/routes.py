@@ -189,3 +189,12 @@ def accept(Email):
     db.session.commit()
     flash(f'You and {user.FirstName} {user.LastName} are now friends!', 'success')
     return redirect(url_for('users.profile'))
+
+@users.route('/unfriend/<Email>')
+@login_required
+def unfriend(Email):
+    user = User.query.filter_by(Email=Email).first()
+    current_user.unfollow(user)
+    db.session.commit()
+    flash(f'You unfriend {user.FirstName} {user.LastName}!', 'danger')
+    return redirect(url_for('users.profile'))
