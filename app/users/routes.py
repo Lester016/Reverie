@@ -70,8 +70,26 @@ def profile():
     followers = current_user.Followers.all()
     following = current_user.Followed.all()
 
+    friends = []
+    friendlists = []
+
+    if len(followers) > len(following):
+        for follower in followers:
+            for followed in following:
+                if (followed.id == follower.id):
+                    friends.append(followed.id)
+    else:
+        for followed in following:
+            for follower in followers:
+                if (followed.id == follower.id):
+                    friends.append(follower.id)
+
+    for friend in friends:
+        friendlists.append(User.query.filter_by(id=friend).first())
+
     return render_template('profile.html', title='Profile', posts=posts,
-                           active='profile', followers=followers, following=following)
+                           active='profile', followers=followers, following=following,
+                           friends=friends, users=friendlists)
 
 
 @users.route("/profile/update", methods=['GET', 'POST'])

@@ -52,10 +52,27 @@ def user_profile(email):
     followers = user.Followers.all()
     following = user.Followed.all()
 
+    friends = []
+    friendlists = []
+
+    if len(followers) > len(following):
+        for follower in followers:
+            for followed in following:
+                if (followed.id == follower.id):
+                    friendlists.append(followed.id)
+    else:
+        for followed in following:
+            for follower in followers:
+                if (followed.id == follower.id):
+                    friendlists.append(follower.id)
+
+    for friendlist in friendlists:
+        friends.append(User.query.filter_by(id=friendlist).first())
+
     return render_template('user-profile.html', posts=posts, user=user,
                            active=('profile' if user.Email ==
                                    current_user.Email else ''),
-                           followers=followers, following=following)
+                           followers=followers, following=following, friends=friends)
 
 
 @main.route("/search", methods=['GET', 'POST'])
@@ -76,7 +93,8 @@ def pdf_template(email):
     user = User.query.filter_by(Email=email).first()
 
     rendered = render_template('pdf-template.html',
-                               firstname=user.FirstName, lastname=user.LastName, email=user.Email, posts=user.Posts)
+                               firstname=user.FirstName, lastname=user.LastName, 
+                               email=user.Email, posts=user.Posts)
     pdf = pdfkit.from_string(rendered, False)
 
     response = make_response(pdf)
