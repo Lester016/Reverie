@@ -34,7 +34,7 @@ def register():
         flash('Signed in!', 'success')
         return redirect(url_for('users.login'))
     return render_template('register.html', form=form, title='Register')
-
+ 
 
 @users.route("/login", methods=['GET', 'POST'])
 def login():

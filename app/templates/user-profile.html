@@ -8,15 +8,18 @@
         </div>
         <div class="col-sm">
             {% if current_user.Email != user.Email %}
-            {% if current_user.is_following(user) %}
-            <a href="{{ url_for('users.unfollow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">Unfriend</a>
-            {% else %}
-            <a href="{{ url_for('users.follow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">Add
-                Friend</a>
-            {% endif %}
-            <a href="{{ url_for('main.pdf_template', email=user.Email) }}"
-                class="btn btn-primary btn-rounded btn-sm">Generate User
-                Data</a>
+                {% if current_user.is_following(user) %}
+                <a href="{{ url_for('users.unfollow', Email=user.Email) }}"
+                    class="btn btn-primary btn-rounded btn-sm">Unfollow</a>
+                    {% if user.is_following(current_user) %}
+                    <a href="{{ url_for('main.pdf_template', email=user.Email) }}"
+                        class="btn btn-primary btn-rounded btn-sm">Generate User
+                        Data</a>
+                    {% endif %}
+                {% else %}
+                <a href="{{ url_for('users.follow', Email=user.Email) }}"
+                    class="btn btn-primary btn-rounded btn-sm">Follow</a>
+                {% endif %}
             {% else %}
             <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
                 Profile</a>
