@@ -29,11 +29,27 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#friends" role="tab" aria-controls="contact"
-                aria-selected="false">Friends</a>
+                aria-selected="false">Friends 
+                <span class="badge badge-primary badge-pill">
+                    {% if users|count %}
+                        {{ users|count }}
+                    {% endif %}
+                </span>
+            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#friendrequest" role="tab"
-                aria-controls="profile" aria-selected="false">Friend Requests</a>
+                aria-controls="profile" aria-selected="false">Friend Requests
+                <span class="badge badge-primary badge-pill">
+                    {% set count = [0] %}
+                    {% for follower in followers %}
+                        {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
+                            {% if count.append(count.pop() + 1) %}{% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {{ count[0] }}
+                </span>
+            </a>
         </li>
     </ul>
     <div class="float-right">

@@ -72,17 +72,33 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#friends" role="tab" aria-controls="contact"
-                aria-selected="false">Friends</a>
+                aria-selected="false">Friends 
+                <span class="badge badge-primary badge-pill">
+                    {% if friends|count %}
+                        {{ friends|count }}
+                    {% endif %}
+                </span>
+            </a>
         </li>
         {% if current_user.id == user.id %}
         <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#friendrequest" role="tab"
-                aria-controls="profile" aria-selected="false">Friend Requests</a>
+                aria-controls="profile" aria-selected="false">Friend Requests 
+                <span class="badge badge-primary badge-pill">
+                    {% set count = [0] %}
+                    {% for follower in followers %}
+                        {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
+                            {% if count.append(count.pop() + 1) %}{% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {{ count[0] }}
+                </span>
+            </a>
         </li>
         {% else %}
         <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#mutuals" role="tab" aria-controls="profile"
-                aria-selected="false">Mutual Friends</a>
+                aria-selected="false">Mutual Friends <span class="badge badge-primary badge-pill">4</span></a>
         </li>
         {% endif %}
     </ul>
@@ -167,12 +183,15 @@
         </div>
         <div class="tab-pane fade" id="friendrequest" role="tabpanel" aria-labelledby="contact-tab">
             {% for follower in followers %}
+            {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
             <h1>
                 {{ follower.FirstName }} {{ follower.LastName }}
-                <a href="{{ url_for('users.follow', Email=follower.Email) }}" class="btn btn-primary btn-rounded btn-sm">
+                <a href="{{ url_for('users.accept', Email=follower.Email) }}"
+                    class="btn btn-primary btn-rounded btn-sm">
                     Accept Request
                 </a>
             </h1>
+            {% endif %}
             {% endfor %}
         </div>
         <div class="tab-pane fade" id="mutuals" role="tabpanel" aria-labelledby="contact-tab">
