@@ -2,18 +2,16 @@
 {% block content%}
 <div class="container">
 
-    <div class="row">
+    <div class="row" style=" margin-top: -52px;">
         <!-- Section: Blog v.3 -->
-        <section class="my-5 col-xl-9">
+        <section class="my-5 col-xl-9 card" style="background-color: white; padding-top: 10px;">
             <h1>What's on your mind?
                 <a href="{{ url_for('posts.create_post') }}" class="btn btn-outline-primary waves-effect"><i
                         class="fas fa-magic mr-1"></i>
                     Make a story
                 </a>
             </h1>
-
-            <br><br>
-
+            <hr>
             {% for post in posts %}
             <!-- Grid row -->
             <div class="row">
@@ -71,7 +69,7 @@
         </section>
         <!-- Section: Blog v.3 -->
 
-        <section class="my-5 col-xl-3">
+        <section class="my-5 col-xl-3" style="padding-top: 10px;">
             <h4 style="font-weight: bolder;">People You may know</h4>
             {% for user in users %}
             <div class="card-deck">
