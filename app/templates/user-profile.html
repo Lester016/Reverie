@@ -102,7 +102,13 @@
         {% else %}
         <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#mutuals" role="tab" aria-controls="profile"
-                aria-selected="false">Mutual Friends <span class="badge badge-primary badge-pill">4</span></a>
+                aria-selected="false">Mutual Friends 
+                {% if mutuals|count %}
+                <span class="badge badge-primary badge-pill">
+                    {{ mutuals|count }}
+                </span>
+                {% endif %}
+            </a>
         </li>
         {% endif %}
     </ul>
@@ -206,7 +212,13 @@
             {% endfor %}
         </div>
         <div class="tab-pane fade" id="mutuals" role="tabpanel" aria-labelledby="contact-tab">
-
+            {% for friend in friends %}
+                {% for mutual in mutuals %}
+                    {% if friend.id == mutual %}
+                        <h1>{{ friend.FirstName }} {{ friend.LastName }}</h1>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
         </div>
     </div>
 </div>

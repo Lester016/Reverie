@@ -45,6 +45,7 @@ def home():
 def user_profile(email):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(Email=email).first_or_404()
+    visitor = User.query.filter_by(Email=current_user.Email).first_or_404()
     posts = Post.query.filter_by(Author=user)\
         .order_by(Post.DatePosted.desc())\
         .paginate(page=page, per_page=5)
@@ -66,13 +67,45 @@ def user_profile(email):
                 if (followed.id == follower.id):
                     friendlists.append(follower.id)
 
+    visitorFollowers = visitor.Followers.all()
+    visitorFollowing = visitor.Followed.all()
+
+    visitorFriends = []
+    visitorFriendlists = []
+
+    if len(visitorFollowers) > len(visitorFollowing):
+        for follower in visitorFollowers:
+            for followed in visitorFollowing:
+                if (followed.id == follower.id):
+                    visitorFriendlists.append(followed.id)
+    else:
+        for followed in visitorFollowing:
+            for follower in visitorFollowers:
+                if (followed.id == follower.id):
+                    visitorFriendlists.append(follower.id)
+
+    # Compare if they have same friends using the user id's.
+    mutuals = []
+
+    if len(visitorFriendlists) > len(friendlists):
+        for user1 in visitorFriendlists:
+            for user2 in friendlists:
+                if user1 == user2:
+                    mutuals.append(user2)
+    else:
+        for user1 in friendlists:
+            for user2 in visitorFriendlists:
+                if user1 == user2:
+                    mutuals.append(user2)
+
     for friendlist in friendlists:
         friends.append(User.query.filter_by(id=friendlist).first())
 
     return render_template('user-profile.html', posts=posts, user=user,
                            active=('profile' if user.Email ==
                                    current_user.Email else ''),
-                           followers=followers, following=following, friends=friends)
+                           followers=followers, following=following, friends=friends,
+                           friendlists=friendlists, visitorFriendlists=visitorFriendlists, mutuals=mutuals)
 
 
 @main.route("/search", methods=['GET', 'POST'])
@@ -93,7 +126,7 @@ def pdf_template(email):
     user = User.query.filter_by(Email=email).first()
 
     rendered = render_template('pdf-template.html',
-                               firstname=user.FirstName, lastname=user.LastName, 
+                               firstname=user.FirstName, lastname=user.LastName,
                                email=user.Email, posts=user.Posts)
     pdf = pdfkit.from_string(rendered, False)
 
