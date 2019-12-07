@@ -30,23 +30,23 @@
         <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#friends" role="tab" aria-controls="contact"
                 aria-selected="false">Friends 
+                {% if users|count %}
                 <span class="badge badge-primary badge-pill">
-                    {% if users|count %}
                         {{ users|count }}
-                    {% endif %}
                 </span>
+                {% endif %}
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#friendrequest" role="tab"
                 aria-controls="profile" aria-selected="false">Friend Requests
-                <span class="badge badge-primary badge-pill">
                     {% set count = [0] %}
                     {% for follower in followers %}
                         {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
                             {% if count.append(count.pop() + 1) %}{% endif %}
                         {% endif %}
                     {% endfor %}
+                <span class="badge badge-primary badge-pill">
                     {{ count[0] }}
                 </span>
             </a>
@@ -125,7 +125,7 @@
             {% for user in users %}
             <h1>
                 {{ user.FirstName }} {{ user.LastName }}
-                <a href="{{ url_for('users.unfriend', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
+                <a href="{{ url_for('users.unfriend', Email=user.Email) }}" class="btn btn-danger btn-rounded btn-sm">
                     Unfriend
                 </a>
             </h1>
