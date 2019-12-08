@@ -25,7 +25,7 @@
                             aria-haspopup="true" aria-expanded="false">Pending</button>
 
                         <div class="dropdown-menu">
-                            <a href="{{ url_for('users.unfollow', Email=user.Email) }}"
+                            <a href="{{ url_for('users.cancel', Email=user.Email) }}"
                                 class="btn btn-primary btn-rounded btn-sm">Cancel Request</a>
                         </div>
                         <!-- Basic dropdown -->
@@ -42,7 +42,7 @@
 
                     {% else %}
                         {% if user.is_following(current_user) %}
-                        <a href="{{ url_for('users.follow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
+                        <a href="{{ url_for('users.accept', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
                             Accept Request
                         </a>
                         {% else %}

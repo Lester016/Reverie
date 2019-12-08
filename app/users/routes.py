@@ -162,7 +162,7 @@ def follow(Email):
         return redirect(url_for('main.user_profile', email=user.Email))
     current_user.follow(user)
     db.session.commit()
-    flash(f'You are following {user.FirstName} {user.LastName}!', 'success')
+    flash(f'You added {user.FirstName} {user.LastName}!', 'success')
     return redirect(url_for('main.user_profile', email=user.Email))
 
 
@@ -188,7 +188,7 @@ def accept(Email):
     current_user.follow(user)
     db.session.commit()
     flash(f'You and {user.FirstName} {user.LastName} are now friends!', 'success')
-    return redirect(url_for('users.profile'))
+    return redirect(url_for('main.user_profile', email=Email))
 
 @users.route('/unfriend/<Email>')
 @login_required
@@ -197,4 +197,13 @@ def unfriend(Email):
     current_user.unfollow(user)
     db.session.commit()
     flash(f'You unfriend {user.FirstName} {user.LastName}!', 'danger')
+    return redirect(url_for('users.profile'))
+
+@users.route('/cancel/<Email>')
+@login_required
+def cancel(Email):
+    user = User.query.filter_by(Email=Email).first()
+    current_user.unfollow(user)
+    db.session.commit()
+    flash(f'You cancel your friend request to {user.FirstName} {user.LastName}!', 'danger')
     return redirect(url_for('users.profile'))
