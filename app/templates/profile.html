@@ -123,27 +123,45 @@
             <!-- Section: Blog v.1 -->
         </div>
         <div class="tab-pane fade" id="friends" role="tabpanel" aria-labelledby="profile-tab">
-            {% for user in users %}
-            <h1>
-                {{ user.FirstName }} {{ user.LastName }}
-                <a href="{{ url_for('users.unfriend', Email=user.Email) }}" class="btn btn-danger btn-rounded btn-sm">
-                    Unfriend
-                </a>
-            </h1>
-            {% endfor %}
+            <ul class="list-group list-group-flush">
+                <ul class="list-group">
+                    {% for user in users %}
+                    <li class="list-group-item">
+                        <img style="max-width: 50px; margin-right: 10px;"
+                        src="{{ url_for('static', filename='profile_pictures/' + user.ProfilePicture) }}"
+                        class="img-fluid z-depth-1 rounded-circle" alt="Responsive image">
+                        <a href="{{ url_for('main.user_profile', email=user.Email) }}">
+                            <strong>{{ user.FirstName }} {{ user.LastName }}</strong>
+                        </a>
+                        <a href="{{ url_for('users.unfriend', Email=user.Email) }}" class="btn btn-danger btn-rounded btn-sm">
+                            Unfriend
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </ul>
         </div>
         <div class="tab-pane fade" id="friendrequest" role="tabpanel" aria-labelledby="contact-tab">
-            {% for follower in followers %}
-            {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
-            <h1>
-                {{ follower.FirstName }} {{ follower.LastName }}
-                <a href="{{ url_for('users.accept', Email=follower.Email) }}"
-                    class="btn btn-primary btn-rounded btn-sm">
-                    Accept Request
-                </a>
-            </h1>
-            {% endif %}
-            {% endfor %}
+            <ul class="list-group list-group-flush">
+                <ul class="list-group">
+                    {% for follower in followers %}
+                    {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
+                    <li class="list-group-item">
+                    <img style="max-width: 50px; margin-right: 10px;"
+                    src="{{ url_for('static', filename='profile_pictures/' + follower.ProfilePicture) }}"
+                    class="img-fluid z-depth-1 rounded-circle" alt="Responsive image">
+                    <a href="{{ url_for('main.user_profile', email=follower.Email) }}">
+                        <strong>{{ follower.FirstName }} {{ follower.LastName }}</strong>
+                    </a>
+                    <a href="{{ url_for('users.accept', Email=follower.Email) }}"
+                        class="btn btn-primary btn-rounded btn-sm">
+                        Accept Request
+                    </a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </ul>
         </div>
     </div>
 </div>
