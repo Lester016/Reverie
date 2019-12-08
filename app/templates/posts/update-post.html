@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content%}
-<main>
-    <form class="container" method="POST" enctype="multipart/form-data">
+<main class="card">
+    <form class="container card-body" method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         {% if post.ImageFile %}
         <!-- Card image -->
@@ -16,7 +16,7 @@
         <br>
         <div class="d-flex justify-content-center file-field">
             <a class="btn-floating blue-gradient mt-0 float-left">
-                <i class="fas fa-plus" aria-hidden="true"></i>
+                <i class="fas fa-image"></i>
                 {{ form.postImage }}
             </a>
         </div>
@@ -34,12 +34,6 @@
                 <div class="md-form">
                     {{ form.content(class="form-control md-textarea") }}
                     {{ form.content.label }}
-                </div>
-
-                <!-- Copy -->
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="materialContactFormCopy">
-                    <label class="form-check-label" for="materialContactFormCopy">Contains explicit content</label>
                 </div>
 
                 <!-- Send button -->
