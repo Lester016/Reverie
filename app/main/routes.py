@@ -14,7 +14,7 @@ main = Blueprint('main', __name__)
 
 @main.route("/", methods=['GET', 'POST'])
 def home():
-
+    users = []
     form = RegistrationForm()
     if form.validate_on_submit():
         firstName = form.firstName.data.capitalize()
@@ -33,12 +33,19 @@ def home():
         return redirect(url_for('main.home'))
     if current_user.is_authenticated:
         posts = current_user.followed_posts().all()
-        users = User.query.filter(User.id != current_user.id).order_by(
-            func.random()).limit(3).all()
+        # users = User.query.filter(User.id != current_user.id).order_by(
+        #     func.random()).limit(3).all()
+        tempUsers = User.query.filter(
+            User.id != current_user.id).order_by(func.random()).all()
+
+        for tempUser in tempUsers:
+            if not current_user.is_following(tempUser) and len(users) <= 2:
+                users.append(tempUser)
+
         return render_template('user-index.html', posts=posts, users=users, active='home')
 
-    posts = Post.query.order_by(Post.DatePosted.desc())
-    return render_template('index.html', form=form, posts=posts)
+    # posts = Post.query.order_by(Post.DatePosted.desc())
+    return render_template('index.html', form=form)
 
 
 @main.route("/profile/<string:email>")
