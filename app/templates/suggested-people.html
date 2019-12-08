@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content%}
+<div class="container">
+
+    <div class="row" style=" margin-top: -52px;">
+        <!-- Section: Blog v.3 -->
+        <section class="my-5 col-xl-12 card text-center" style="background-color: white; padding-top: 10px;">
+            <h1>People You May Know</h1>
+            {% for user in users %}
+                <div class="list-group-item text-center">
+                    <p class="mb-0">
+                        <img style="max-width: 50px; margin-right: 10px;"
+                            src="{{ url_for('static', filename='profile_pictures/' + user.ProfilePicture) }}"
+                            class="img-fluid z-depth-1 rounded-circle" alt="Responsive image">
+                        <a href="{{ url_for('main.user_profile', email=user.Email) }}">
+                            <strong>{{ user.FirstName }} {{ user.LastName }}</strong>
+                        </a>
+                    </p>
+                    <p style="font-size: 13px; padding-top:15px;">Lester Deguzman is a mutual
+                        <a href="{{ url_for('users.follow', Email=user.Email) }}"
+                            class="btn btn-primary btn-rounded btn-sm" style="font-size: 9px;">
+                            Add Friend
+                        </a></p>
+                </div>
+                {% endfor %}
+        </section>
+        <!-- Section: Blog v.3 -->
+
+    </div>
+</div>
+
+{% endblock %}

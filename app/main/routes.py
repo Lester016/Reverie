@@ -142,3 +142,14 @@ def pdf_template(email):
     response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
 
     return response
+
+@main.route("/suggested-people")
+def suggested_people():
+    users = []
+    tempUsers = User.query.filter(
+            User.id != current_user.id).order_by(func.random()).all()
+
+    for tempUser in tempUsers:
+        if not current_user.is_following(tempUser):
+            users.append(tempUser)
+    return render_template('suggested-people.html', users=users, active='home')
