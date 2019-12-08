@@ -12,60 +12,64 @@
                 </a>
             </h1>
             <hr>
-            {% for post in posts %}
-            <!-- Grid row -->
-            <div class="row">
-                {% if post.ImageFile %}
-                <!-- Grid column -->
-                <div class="col-lg-5 col-xl-4">
+            {% if posts %}
+                {% for post in posts %}
+                <!-- Grid row -->
+                <div class="row">
+                    {% if post.ImageFile %}
+                    <!-- Grid column -->
+                    <div class="col-lg-5 col-xl-4">
 
-                    <!-- Featured image -->
-                    <div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
-                        <img class="img-fluid" src="{{ url_for('static', filename='post_images/' +
-                            post.ImageFile) }}" alt="Post Image">
-                        <a href="{{ url_for('posts.post', postID=post.id) }}">
+                        <!-- Featured image -->
+                        <div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
+                            <img class="img-fluid" src="{{ url_for('static', filename='post_images/' +
+                                post.ImageFile) }}" alt="Post Image">
+                            <a href="{{ url_for('posts.post', postID=post.id) }}">
 
-                            <div class="mask rgba-white-slight"></div>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+                    {% endif %}
+                    <!-- Grid column -->
+                    <div class="col-lg-7 col-xl-8">
+
+                        <!-- Post title -->
+                        <a href="{{ url_for('posts.post', postID=post.id) }}" style="color: black;">
+                            <h5 class="font-weight-bold mb-3"><strong>{{ post.Title }}</strong></h5>
+                        </a>
+
+                        <!-- Excerpt -->
+                        {% if post.Content[:100] %}
+
+                        <p class="dark-grey-text">{{ post.Content[:100] + (post.Content[100:] and '...') }}</p>
+                        <!-- Post data -->
+                        {% endif %}
+
+                        <!-- Read more button -->
+
+                        <a href="{{ url_for('main.user_profile', email=post.Author.Email) }}">
+                            <h6 class="font-weight-bold mb-3"><img style="max-width: 30px; margin-right: 10px;"
+                                    src="{{ url_for('static', filename='profile_pictures/' + post.Author.ProfilePicture) }}"
+                                    class="img-fluid z-depth-1 rounded-circle"
+                                    alt="Responsive image"><strong>{{ post.Author.FirstName }}
+                                    {{ post.Author.LastName }}</strong> |
+                                {{ post.DatePosted.strftime('%m/%d/%Y') }}</h6>
                         </a>
                     </div>
+                    <!-- Grid column -->
 
                 </div>
-                <!-- Grid column -->
-                {% endif %}
-                <!-- Grid column -->
-                <div class="col-lg-7 col-xl-8">
+                <!-- Grid row -->
 
-                    <!-- Post title -->
-                    <a href="{{ url_for('posts.post', postID=post.id) }}" style="color: black;">
-                        <h5 class="font-weight-bold mb-3"><strong>{{ post.Title }}</strong></h5>
-                    </a>
-
-                    <!-- Excerpt -->
-                    {% if post.Content[:100] %}
-
-                    <p class="dark-grey-text">{{ post.Content[:100] + (post.Content[100:] and '...') }}</p>
-                    <!-- Post data -->
-                    {% endif %}
-
-                    <!-- Read more button -->
-
-                    <a href="{{ url_for('main.user_profile', email=post.Author.Email) }}">
-                        <h6 class="font-weight-bold mb-3"><img style="max-width: 30px; margin-right: 10px;"
-                                src="{{ url_for('static', filename='profile_pictures/' + post.Author.ProfilePicture) }}"
-                                class="img-fluid z-depth-1 rounded-circle"
-                                alt="Responsive image"><strong>{{ post.Author.FirstName }}
-                                {{ post.Author.LastName }}</strong> |
-                            {{ post.DatePosted.strftime('%m/%d/%Y') }}</h6>
-                    </a>
-                </div>
-                <!-- Grid column -->
-
-            </div>
-            <!-- Grid row -->
-
-            <hr class="my-5">
-            {% endfor %}
-
+                <hr class="my-5">
+                {% endfor %}
+            {% else %}
+                <img src="{{ url_for('static', filename='socialize.png') }}"" alt="">
+                <h3 class="text-center">You don't have any friends/following.</h3>
+            {% endif %}
         </section>
         <!-- Section: Blog v.3 -->
 

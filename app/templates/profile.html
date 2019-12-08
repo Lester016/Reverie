@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content%}
-<div class="container" style="margin-top: 100px;">
-    <div class="row">
+<div class="container card" style="padding-top: 50px; background-color: white;">
+    <div class="row card-body">
         <div class="col-sm">
             <h1>{{ current_user.FirstName }} {{ current_user.LastName }}</h1>
             <p>{{ current_user.Email }}</p>
@@ -52,11 +52,12 @@
             </a>
         </li>
     </ul>
-    <div class="float-right">
-        <a href="{{ url_for('posts.create_post') }}" class="btn btn-outline-primary waves-effect"><i
-                class="fas fa-magic mr-1"></i>Make a story</a>
-    </div>
     <div class="tab-content" id="myTabContent">
+
+        <div class="float-right" style="float: right;">
+            <a href="{{ url_for('posts.create_post') }}" class="btn btn-outline-primary waves-effect"><i
+                class="fas fa-magic mr-1"></i>Make a story</a>
+        </div>
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <!-- Section: Blog v.1 -->
             <section class="my-5">
