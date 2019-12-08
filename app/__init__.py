@@ -42,11 +42,6 @@ def create_app(config_class=Config):
     return app
 
 
-@login_manager.user_loader
-def load_user(id):
-    return User.query.filter_by(user_id=id).first()
-
-
 # This is for initializing a db
 x = create_app()
 x.app_context().push()
