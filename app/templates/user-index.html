@@ -89,11 +89,12 @@
                             <strong>{{ user.FirstName }} {{ user.LastName }}</strong>
                         </a>
                     </p>
-                    <p style="font-size: 13px; padding-top:15px;">Lester Deguzman is a mutual
+                    <p style="font-size: 13px; padding-top:15px;">
                         <a href="{{ url_for('users.follow', Email=user.Email) }}"
                             class="btn btn-primary btn-rounded btn-sm" style="font-size: 9px;">
                             Add Friend
-                        </a></p>
+                        </a>
+                    </p>
                 </div>
                 {% endfor %}
             </div>
