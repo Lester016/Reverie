@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block content%}
-<div class="container" style="margin-top: 100px; margin-bottom: 50px;">
+<div class="container card" style="padding-top: 50px; margin-bottom: 50px; padding-bottom: 50px;">
     <!-- Enctype is necessary to enable the form for fileinput -->
-    <form class="row" method="POST" enctype="multipart/form-data">
+    <form class="row card-body" method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <div class="col-sm">
             <div class="row">
