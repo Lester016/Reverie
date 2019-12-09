@@ -2,8 +2,8 @@
 {% block content%}
 <meta property="og:url" content="{{ url_for('posts.post', postID=post.id) }}" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Your Website Title" />
-<meta property="og:description" content="Your description" />
+<meta property="og:title" content="{{ post.Title }}" />
+<meta property="og:description" content="{{ post.Content }}" />
 <meta property="og:image" content="{{ url_for('static', filename='post_images/' +
 post.ImageFile) }}" />
 <main>
