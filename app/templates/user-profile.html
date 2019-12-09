@@ -8,58 +8,58 @@
         </div>
         <div class="col-sm">
             {% if current_user.Email != user.Email %}
-                    {% if current_user.is_following(user) %}
-                        {% if user.is_following(current_user) %}
-                        <!-- Basic dropdown -->
-                        <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Friends</button>
+            {% if current_user.is_following(user) %}
+            {% if user.is_following(current_user) %}
+            <!-- Basic dropdown -->
+            <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">Friends</button>
 
-                        <div class="dropdown-menu">
-                            <a href="{{ url_for('users.unfollow', Email=user.Email) }}"
-                                class="btn btn-danger btn-rounded btn-sm">Unfriend</a>
-                        </div>
-                        <!-- Basic dropdown -->
-                        {% else %}
-                        <!-- Basic dropdown -->
-                        <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Pending</button>
+            <div class="dropdown-menu">
+                <a href="{{ url_for('users.unfollow', Email=user.Email) }}"
+                    class="btn btn-danger btn-rounded btn-sm">Unfriend</a>
+            </div>
+            <!-- Basic dropdown -->
+            {% else %}
+            <!-- Basic dropdown -->
+            <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">Pending</button>
 
-                        <div class="dropdown-menu">
-                            <a href="{{ url_for('users.cancel', Email=user.Email) }}"
-                                class="btn btn-primary btn-rounded btn-sm">Cancel Request</a>
-                        </div>
-                        <!-- Basic dropdown -->
-                        {% endif %}
+            <div class="dropdown-menu">
+                <a href="{{ url_for('users.cancel', Email=user.Email) }}"
+                    class="btn btn-primary btn-rounded btn-sm">Cancel Request</a>
+            </div>
+            <!-- Basic dropdown -->
+            {% endif %}
 
 
-                        {% if user.is_following(current_user) and current_user.is_following(user)  %}
-                        <a href="{{ url_for('main.pdf_template', email=user.Email) }}"
-                            class="btn btn-primary btn-rounded btn-sm">Generate User
-                            Data</a>
-                        {% else %}
-                        <i class="fas fa-check-double"></i>Following
-                        {% endif %}
-
-                    {% else %}
-                        {% if user.is_following(current_user) %}
-                        <a href="{{ url_for('users.accept', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
-                            Accept Request
-                        </a>
-                        {% else %}
-                        <a href="{{ url_for('users.follow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
-                            Add
-                            Friend
-                        </a>
-                        {% endif %}
-                    {% endif %}
+            {% if user.is_following(current_user) and current_user.is_following(user)  %}
+            <a href="{{ url_for('main.pdf_template', email=user.Email) }}"
+                class="btn btn-primary btn-rounded btn-sm">Generate User
+                Data</a>
+            {% else %}
+            <i class="fas fa-check-double"></i>Following
+            {% endif %}
 
             {% else %}
-                <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
-                    Profile</a>
-                <a href="{{ url_for('main.pdf_template', email=current_user.Email) }}"
-                    class="btn btn-primary btn-rounded btn-sm">Generate User
-                    Data
-                </a>
+            {% if user.is_following(current_user) %}
+            <a href="{{ url_for('users.accept', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
+                Accept Request
+            </a>
+            {% else %}
+            <a href="{{ url_for('users.follow', Email=user.Email) }}" class="btn btn-primary btn-rounded btn-sm">
+                Add
+                Friend
+            </a>
+            {% endif %}
+            {% endif %}
+
+            {% else %}
+            <a href="{{ url_for('users.profile_update') }}" class="btn btn-primary btn-rounded btn-sm">Edit
+                Profile</a>
+            <a href="{{ url_for('main.pdf_template', email=current_user.Email) }}"
+                class="btn btn-primary btn-rounded btn-sm">Generate User
+                Data
+            </a>
             {% endif %}
         </div>
         <div class="col-sm">
@@ -76,10 +76,10 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#friends" role="tab" aria-controls="contact"
-                aria-selected="false">Friends 
+                aria-selected="false">Friends
                 {% if friends|count %}
                 <span class="badge badge-primary badge-pill">
-                        {{ friends|count }}
+                    {{ friends|count }}
                 </span>
                 {% endif %}
             </a>
@@ -87,13 +87,13 @@
         {% if current_user.id == user.id %}
         <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#friendrequest" role="tab"
-                aria-controls="profile" aria-selected="false">Friend Requests 
-                    {% set count = [0] %}
-                    {% for follower in followers %}
-                        {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
-                            {% if count.append(count.pop() + 1) %}{% endif %}
-                        {% endif %}
-                    {% endfor %}
+                aria-controls="profile" aria-selected="false">Friend Requests
+                {% set count = [0] %}
+                {% for follower in followers %}
+                {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
+                {% if count.append(count.pop() + 1) %}{% endif %}
+                {% endif %}
+                {% endfor %}
                 <span class="badge badge-primary badge-pill">
                     {{ count[0] }}
                 </span>
@@ -102,7 +102,7 @@
         {% else %}
         <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#mutuals" role="tab" aria-controls="profile"
-                aria-selected="false">Mutual Friends 
+                aria-selected="false">Mutual Friends
                 {% if mutuals|count %}
                 <span class="badge badge-primary badge-pill">
                     {{ mutuals|count }}
@@ -189,21 +189,22 @@
         <div class="tab-pane fade" id="friends" role="tabpanel" aria-labelledby="profile-tab">
             <ul class="list-group list-group-flush">
                 <ul class="list-group">
-                {% for friend in friends %}
-                <li class="list-group-item">
-                    <img style="max-width: 50px; margin-right: 10px;"
-                    src="{{ url_for('static', filename='profile_pictures/' + friend.ProfilePicture) }}"
-                    class="img-fluid z-depth-1 rounded-circle" alt="Responsive image">
-                    <a href="{{ url_for('main.user_profile', email=friend.Email) }}">
-                        <strong>{{ friend.FirstName }} {{ friend.LastName }}</strong>
-                    </a>
-                    {% if current_user.id == user.id %}
-                    <a href="{{ url_for('users.unfriend', Email=friend.Email) }}" class="btn btn-danger btn-rounded btn-sm">
-                        Unfriend
-                    </a>
-                </li>
-                {% endif %}
-                {% endfor %}
+                    {% for friend in friends %}
+                    <li class="list-group-item">
+                        <img style="max-width: 50px; margin-right: 10px;"
+                            src="{{ url_for('static', filename='profile_pictures/' + friend.ProfilePicture) }}"
+                            class="img-fluid z-depth-1 rounded-circle" alt="Responsive image">
+                        <a href="{{ url_for('main.user_profile', email=friend.Email) }}">
+                            <strong>{{ friend.FirstName }} {{ friend.LastName }}</strong>
+                        </a>
+                        {% if current_user.id == user.id %}
+                        <a href="{{ url_for('users.unfriend', Email=friend.Email) }}"
+                            class="btn btn-danger btn-rounded btn-sm">
+                            Unfriend
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
                 </ul>
             </ul>
         </div>
@@ -213,23 +214,23 @@
                     {% for follower in followers %}
                     {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
                     <li class="list-group-item">
-                    <img style="max-width: 50px; margin-right: 10px;"
-                    src="{{ url_for('static', filename='profile_pictures/' + follower.ProfilePicture) }}"
-                    class="img-fluid z-depth-1 rounded-circle" alt="Responsive image">
-                    <a href="{{ url_for('main.user_profile', email=follower.Email) }}">
-                        <strong>{{ follower.FirstName }} {{ follower.LastName }}</strong>
-                    </a>
-                    <a href="{{ url_for('users.accept', Email=follower.Email) }}"
-                        class="btn btn-primary btn-rounded btn-sm">
-                        Accept Request
-                    </a>
+                        <img style="max-width: 50px; margin-right: 10px;"
+                            src="{{ url_for('static', filename='profile_pictures/' + follower.ProfilePicture) }}"
+                            class="img-fluid z-depth-1 rounded-circle" alt="Responsive image">
+                        <a href="{{ url_for('main.user_profile', email=follower.Email) }}">
+                            <strong>{{ follower.FirstName }} {{ follower.LastName }}</strong>
+                        </a>
+                        <a href="{{ url_for('users.accept', Email=follower.Email) }}"
+                            class="btn btn-primary btn-rounded btn-sm">
+                            Accept Request
+                        </a>
                     </li>
                     {% endif %}
                     {% endfor %}
                 </ul>
             </ul>
         </div>
-        <div class="tab-pane fade" id="mutuals" role="tabpanel" aria-labelledby="contact-tab">                    
+        <div class="tab-pane fade" id="mutuals" role="tabpanel" aria-labelledby="contact-tab">
             <ul class="list-group list-group-flush">
                 <ul class="list-group">
                     {% for friend in friends %}
@@ -237,8 +238,8 @@
                     {% if friend.id == mutual %}
                     <li class="list-group-item">
                         <img style="max-width: 50px; margin-right: 10px;"
-                        src="{{ url_for('static', filename='profile_pictures/' + friend.ProfilePicture) }}"
-                        class="img-fluid z-depth-1 rounded-circle" alt="Responsive image">
+                            src="{{ url_for('static', filename='profile_pictures/' + friend.ProfilePicture) }}"
+                            class="img-fluid z-depth-1 rounded-circle" alt="Responsive image">
                         <a href="{{ url_for('main.user_profile', email=friend.Email) }}">
                             <strong>{{ friend.FirstName }} {{ friend.LastName }}</strong>
                         </a>

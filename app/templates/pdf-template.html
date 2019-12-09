@@ -1,14 +1,122 @@
-<body style="background-color: beige;">
-    <h1 style="text-decoration: underline; text-align: center;">User's Info</h1>
-    <br><br>
-    <h2>{{ firstname }} {{ lastname }}</h2>
-    <h4>Followed: 61</h4>
-    <h4>Followers: 32</h4>
-    <h5>{{ email }}</h5>
-    <h2>Posts: </h2>
-    {% for post in posts %}
-    <p>{{ post.Title }}</p>
-    <p>{{ post.DatePosted.strftime('%m/%d/%Y') }}</p>
-    <br>
-    {% endfor %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="text-center">
+        <h1>{{ user.FirstName }} {{ user.LastName }}</h1>
+        <p><strong>{{ user.Email }}</strong></p>
+    </div>
+    <div class="progress" style="height: 1px;">
+        <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="25" aria-valuemin="0"
+            aria-valuemax="100"></div>
+    </div>
+
+    <br><br><br>
+    <table class="table">
+        <h1>Friends</h1>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for friend in friends %}
+            <tr>
+                <th scope="row">{{ friend.id }}</th>
+                <td>{{ friend.FirstName }} {{ friend.LastName }}</td>
+                <td>{{ friend.Email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br><br><br>
+
+    {% if current_user.id != user.id %}
+    <table class="table">
+        <h1>Mutuals</h1>
+        <thead>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+        <tbody>
+            {% for friend in friends %}
+            {% for mutual in mutuals %}
+            {% if friend.id == mutual %}
+            <tr>
+                <th scope="row">{{ friend.id }}</th>
+                <td>{{ friend.FirstName }} {{ friend.FirstName }}</td>
+                <td>{{ friend.Email }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <table class="table">
+        <h1>Friend Requests</h1>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for follower in followers %}
+            {% if not current_user.is_following(follower) and follower.is_following(current_user) %}
+            <tr>
+                <th scope="row">{{ follower.id }}</th>
+                <td>{{ follower.FirstName }} {{ follower.LastName }}</td>
+                <td>{{ follower.Email }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    <br><br><br>
+    <table class="table">
+        <h1>Posts</h1>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Date Posted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <th scope="row">{{ post.id }}</th>
+                <td>{{ post.Title }}</td>
+                <td>{{ post.DatePosted }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br><br><br>
+
+    {% if current_user.id != user.id %}
+    <p>Printed By: <strong>{{ current_user.Email }}</strong></p>
+    {% endif %}
+
 </body>
+
+</html>

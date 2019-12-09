@@ -131,10 +131,61 @@ def search():
 def pdf_template(email):
 
     user = User.query.filter_by(Email=email).first()
+    visitor = User.query.filter_by(Email=current_user.Email).first_or_404()
 
-    rendered = render_template('pdf-template.html',
-                               firstname=user.FirstName, lastname=user.LastName,
-                               email=user.Email, posts=user.Posts)
+    followers = user.Followers.all()
+    following = user.Followed.all()
+
+    friends = []
+    friendlists = []
+
+    if len(followers) > len(following):
+        for follower in followers:
+            for followed in following:
+                if (followed.id == follower.id):
+                    friendlists.append(followed.id)
+    else:
+        for followed in following:
+            for follower in followers:
+                if (followed.id == follower.id):
+                    friendlists.append(follower.id)
+
+    visitorFollowers = visitor.Followers.all()
+    visitorFollowing = visitor.Followed.all()
+
+    visitorFriends = []
+    visitorFriendlists = []
+
+    if len(visitorFollowers) > len(visitorFollowing):
+        for follower in visitorFollowers:
+            for followed in visitorFollowing:
+                if (followed.id == follower.id):
+                    visitorFriendlists.append(followed.id)
+    else:
+        for followed in visitorFollowing:
+            for follower in visitorFollowers:
+                if (followed.id == follower.id):
+                    visitorFriendlists.append(follower.id)
+
+    # Compare if they have same friends using the user id's.
+    mutuals = []
+
+    if len(visitorFriendlists) > len(friendlists):
+        for user1 in visitorFriendlists:
+            for user2 in friendlists:
+                if user1 == user2:
+                    mutuals.append(user2)
+    else:
+        for user1 in friendlists:
+            for user2 in visitorFriendlists:
+                if user1 == user2:
+                    mutuals.append(user2)
+
+    for friendlist in friendlists:
+        friends.append(User.query.filter_by(id=friendlist).first())
+
+    rendered = render_template(
+        'pdf-template.html', friends=friends, posts=user.Posts, user=user, mutuals=mutuals, followers=followers)
     pdf = pdfkit.from_string(rendered, False)
 
     response = make_response(pdf)
@@ -143,11 +194,12 @@ def pdf_template(email):
 
     return response
 
+
 @main.route("/suggested-people")
 def suggested_people():
     users = []
     tempUsers = User.query.filter(
-            User.id != current_user.id).order_by(func.random()).all()
+        User.id != current_user.id).order_by(func.random()).all()
 
     for tempUser in tempUsers:
         if not current_user.is_following(tempUser):
