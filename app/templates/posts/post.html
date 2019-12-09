@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block content%}
+<meta property="og:url" content="{{ url_for('posts.post', postID=post.id) }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Your Website Title" />
+<meta property="og:description" content="Your description" />
+<meta property="og:image" content="https://www.your-domain.com/path/image.jpg" />
 <main>
     <br>
     <!-- Card -->
@@ -32,12 +37,18 @@
             <p class="card-text">{{ post.Content }}
             </p>
 
-            <!-- Linkedin -->
-            <a class="px-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a>
-            <!-- Twitter -->
-            <a class="px-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a>
-            <!-- Dribbble -->
-            <a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>
+            <!-- Load Facebook SDK for JavaScript -->
+            <div id="fb-root"></div>
+            <script async defer crossorigin="anonymous"
+                src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0"></script>
+
+            <!-- Your share button code -->
+            <div class="fb-share-button" data-href="{{ url_for('posts.post', postID=post.id) }}"
+                data-layout="button_count" data-size="small">
+                <a target="_blank"
+                    href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+                    class="fb-xfbml-parse-ignore">Share</a>
+            </div>
 
         </div>
 
