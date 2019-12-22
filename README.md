@@ -1,5 +1,5 @@
 # Reverie
-A blogging platform that enables the author to make a network and print their data.
+A platform for bloggers that enables them to network and print the friended author's data.
 
 ### How to set up:
 
