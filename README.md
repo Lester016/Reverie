@@ -1,5 +1,7 @@
 # Reverie
-A platform for bloggers that enables them to network and print the friended author's data.
+A social network that enables the user's to print their friend's data.
+
+![the-reverie herokuapp com_](https://user-images.githubusercontent.com/37885860/77821611-99211700-7126-11ea-893f-28e870cd34e5.png)
 
 ### How to set up:
 
