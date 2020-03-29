@@ -3,6 +3,29 @@ A social network that enables the user's to print their friend's data.
 
 ![the-reverie herokuapp com_](https://user-images.githubusercontent.com/37885860/77821611-99211700-7126-11ea-893f-28e870cd34e5.png)
 
+### Features:
+1.) User's Authentication.
+
+2.) Reset Password via Email.
+
+3.) Post, View, Edit, Delete an Article.
+
+4.) Share an Article.
+
+5.) Add/Follow request on other users.
+
+6.) Delete a Friend.
+
+7.) Mutual Friends.
+
+8.) Print the Friend's Data.
+
+9.) User's Profile.
+
+10.) Upload Image.
+
+11.) Change Profile.
+
 ### How to set up:
 
 #### Windows
